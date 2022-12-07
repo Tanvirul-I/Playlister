@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useHistory } from 'react-router-dom'
 import AuthContext from '../auth'
 import Copyright from './Copyright'
 import { GlobalStoreContext } from '../store'
@@ -18,6 +19,12 @@ import Typography from '@mui/material/Typography';
 export default function RegisterScreen() {
     const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
+    store.history = useHistory();
+
+    if (auth.loggedIn) {
+        store.history.push("/");
+        return null
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();

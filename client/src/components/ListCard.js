@@ -79,7 +79,11 @@ function ListCard(props) {
             style={{ width: '100%', fontSize: '30pt' }}
             button
             onClick={(event) => {
-                handleLoadList(event, idNamePair._id)
+                if (event.detail === 2) {
+                    console.log("test")
+                    handleToggleEdit(event)
+                }
+                //handleLoadList(event, idNamePair._id)
             }}
         >
             <Box sx={{ p: 1, flexGrow: 1 }}>
@@ -87,12 +91,12 @@ function ListCard(props) {
                     fontSize: "50px",
                     ':hover': {
                         color: 'white',
-                    }}}>1000</ThumbUp>
+                    }}}></ThumbUp>
                 <ThumbDown sx = {{ color: 'black', position: "absolute", right: "15%",
                     fontSize: "50px",
                     ':hover': {
                         color: 'white',
-                    }}}>1000</ThumbDown>
+                    }}}></ThumbDown>
                 <Typography variant="h3">{idNamePair.name}</Typography>
                 <Typography variant="h6">Published: {author}</Typography>
                 <Typography variant="h6">Author: {author}</Typography>
