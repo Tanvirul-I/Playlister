@@ -9,7 +9,7 @@
     */
   --swatch-foundation: #2f2f2f;
   --swatch-primary: #ffffff;
-  --swatch-complement: #c9c9c9;
+  --swatch-complement: #949494;
   --swatch-contrast: #111111;
   --swatch-accent: #669966;
   --swatch-status: #d6d6d6;
@@ -102,8 +102,9 @@ body {
 #playlister-list-selector {
   position: absolute;
   left: 0%;
-  top: 10%;
-  width: 100%;
+  margin-top: 10%;
+  width: 50%;
+  top: 0%;
   height: 80%;
   background-color: var(--swatch-primary);
 }
@@ -129,19 +130,22 @@ body {
   font-size: 36pt;
 }
 
-#add-list-button {
-  float: left;
-}
-
-#list-selector-list {
+#list-selector-footer {
   position: absolute;
   left: 0%;
-  top: 10%;
+  top: 90%;
   width: 100%;
-  height: 90%;
+  height: 10%;
   display: flex;
-  flex-direction: column;
-  overflow: scroll;
+  align-items: center;
+  justify-content: center;
+  font-size: 36pt;
+  background: #242424;
+  color: white;
+}
+
+#add-list-button {
+  float: left;
 }
 
 .list-card,
@@ -151,6 +155,8 @@ body {
   margin: 10px;
   padding: 20px;
   border-radius: 25px;
+  width: 5%;
+  background: var(--swatch-foundation)
 }
 
 .list-card:aria-disabled,
@@ -173,7 +179,7 @@ body {
 }
 
 .unselected-list-card {
-  background-color: var(--swatch-complement);
+  background-color: var(--swatch-foundation)
 }
 
 .list-card-button {
@@ -235,8 +241,30 @@ body {
   height: 75%;
   background: #949494;
 }
+
 .youtube-player-info {
   font-size: 45px;
+}
+
+#list-selector-list {
+  position: absolute;
+  left: 0%;
+  margin-top: 7%;
+  width: 50%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+#list-selector-list > * {
+  margin: 0 0 0 2%;
+}
+
+#list-selector-list > ul > * {
+  background-color:var(--swatch-complement);
+  border-radius: 10px;
+  margin: 2% 0;
 }
 
 input {

@@ -1,24 +1,24 @@
 import { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
-import Box from '@mui/material/Box';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
-import ListItem from '@mui/material/ListItem';
-import TextField from '@mui/material/TextField';
+
+import { Box, ListItem, TextField, Typography } from '@mui/material'
+import { ExpandMore, ExpandLess, ThumbUp, ThumbDown } from '@mui/icons-material';
 
 /*
-    This is a card in our list of top 5 lists. It lets select
+    This is a card in our list of playlists. It lets select
     a list for editing and it has controls for changing its 
     name or deleting it.
     
     @author McKilla Gorilla
+    @author Tanvirul Islam
 */
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const { idNamePair, selected } = props;
+
+    let author = "Test"
 
     function handleLoadList(event, id) {
         
@@ -76,24 +76,33 @@ function ListCard(props) {
             id={idNamePair._id}
             key={idNamePair._id}
             sx={{ marginTop: '15px', display: 'flex', p: 1 }}
-            style={{ width: '100%', fontSize: '48pt' }}
+            style={{ width: '100%', fontSize: '30pt' }}
             button
             onClick={(event) => {
                 handleLoadList(event, idNamePair._id)
             }}
         >
-            <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                    <EditIcon style={{fontSize:'48pt'}} />
-                </IconButton>
-            </Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'48pt'}} />
-                </IconButton>
+            <Box sx={{ p: 1, flexGrow: 1 }}>
+                <ThumbUp sx = {{ color: 'black', position: "absolute", right: "40%",
+                    fontSize: "50px",
+                    ':hover': {
+                        color: 'white',
+                    }}}>1000</ThumbUp>
+                <ThumbDown sx = {{ color: 'black', position: "absolute", right: "15%",
+                    fontSize: "50px",
+                    ':hover': {
+                        color: 'white',
+                    }}}>1000</ThumbDown>
+                <Typography variant="h3">{idNamePair.name}</Typography>
+                <Typography variant="h6">Published: {author}</Typography>
+                <Typography variant="h6">Author: {author}</Typography>
+                <Typography variant="h6" sx = {{position: "absolute", right: "50%", bottom: "10%"}}
+                >Listens: {author}</Typography>
+                <ExpandMore sx = {{background: '#949494', color: 'black', position: "absolute", right: "1%", bottom: "5%",
+                    fontSize: "50px",
+                    ':hover': {
+                        color: 'white',
+                    }}}></ExpandMore>
             </Box>
         </ListItem>
 

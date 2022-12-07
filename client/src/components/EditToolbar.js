@@ -29,11 +29,11 @@ export default function AppBanner() {
         setSearch(event.target.value);
     }
 
-    let home = activeSelection == "home" ? (<Home size="large" sx = {{ background: "green" }}></Home>) : (<Home size="large"></Home>)
-    let groups = activeSelection == "all" ? (<Groups size="large" sx = {{ position: "absolute", left: "5%", background: "green" }}></Groups>) :
-     (<Groups size="large" sx = {{ position: "absolute", left: "5%" }}></Groups>)
-    let person = activeSelection == "person" ? (<Person size="large" sx = {{ position: "absolute", left: "8%", background: "green" }}></Person>) :
-     (<Person size="large" sx = {{ position: "absolute", left: "8%" }}></Person>)
+    let home = activeSelection == "home" ? (<Home size="large" sx = {{ background: "green", fontSize:'30pt' }}></Home>) : (<Home size="large"></Home>)
+    let groups = activeSelection == "all" ? (<Groups size="large" sx = {{ position: "absolute", left: "7%", background: "green", fontSize:'30pt', fontSize:'30pt' }}></Groups>) :
+     (<Groups size="large" sx = {{ position: "absolute", left: "7%", fontSize:'30pt' }}></Groups>)
+    let person = activeSelection == "person" ? (<Person size="large" sx = {{ position: "absolute", left: "10%", background: "green", fontSize:'30pt' }}></Person>) :
+     (<Person size="large" sx = {{ position: "absolute", left: "12%", fontSize:'30pt' }}></Person>)
 
     return (
         <Box sx={{ flexGrow: 1 }} id="edit-toolbar">

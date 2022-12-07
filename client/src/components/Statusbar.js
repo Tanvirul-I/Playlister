@@ -6,6 +6,7 @@ import { Typography } from '@mui/material'
     Our Status bar React component goes at the bottom of our UI.
     
     @author McKilla Gorilla
+    @author Tanvirul Islam
 */
 function Statusbar() {
     const { store } = useContext(GlobalStoreContext);
