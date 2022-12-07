@@ -15,6 +15,8 @@ export default function AppBanner() {
     const [ search, setSearch ] = useState("Search");
     const isMenuOpen = Boolean(anchorEl);
 
+    let activeSelection = "home"
+
     const handleSortMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -27,13 +29,19 @@ export default function AppBanner() {
         setSearch(event.target.value);
     }
 
+    let home = activeSelection == "home" ? (<Home size="large" sx = {{ background: "green" }}></Home>) : (<Home size="large"></Home>)
+    let groups = activeSelection == "all" ? (<Groups size="large" sx = {{ position: "absolute", left: "5%", background: "green" }}></Groups>) :
+     (<Groups size="large" sx = {{ position: "absolute", left: "5%" }}></Groups>)
+    let person = activeSelection == "person" ? (<Person size="large" sx = {{ position: "absolute", left: "8%", background: "green" }}></Person>) :
+     (<Person size="large" sx = {{ position: "absolute", left: "8%" }}></Person>)
+
     return (
         <Box sx={{ flexGrow: 1 }} id="edit-toolbar">
             <AppBar position="static" style={{ background: '#242424' }}>
                 <Toolbar>
-                    <Home size="large"></Home>
-                    <Groups size="large" sx = {{ position: "absolute", left: "5%" }}></Groups>
-                    <Person size="large" sx = {{ position: "absolute", left: "8%" }}></Person>
+                    {home}
+                    {groups}
+                    {person}
                         <TextField
                             margin="normal"
                             id="search"
@@ -50,7 +58,7 @@ export default function AppBanner() {
                             aria-controls='primary-sort-list-menu'
                             aria-haspopup="true"
                             onClick={handleSortMenuOpen}
-                            sx = {{background: 'grey', color: 'black', position: "absolute", right: "1%",
+                            sx = {{background: '#949494', color: 'black', position: "absolute", right: "1%",
                             ':hover': {
                                 bgcolor: 'white',
                                 color: 'black',

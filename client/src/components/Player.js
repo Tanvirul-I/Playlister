@@ -22,7 +22,7 @@ export default function Player () {
             Player
         </Button>
         <Button variant="contained" disableElevation sx={ {
-            background: 'grey',
+            background: '#949494',
             color: 'black',
             ':hover': {
                 bgcolor: 'black',
@@ -35,8 +35,8 @@ export default function Player () {
         </Button>
         <YoutubePlayer/>
 
-        <div style={{"position": "absolute", left: "40%", fontSize: "45px"}}>
-            Testing
+        <div style={{"position": "absolute", left: "30%", fontSize: "45px"}}>
+            Now Playing
         </div>
 
         <div class="youtube-player-info" style={{"whiteSpace": "pre-line"}}>

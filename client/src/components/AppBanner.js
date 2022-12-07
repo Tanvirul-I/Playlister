@@ -4,6 +4,8 @@ import AuthContext from '../auth';
 import { GlobalStoreContext } from '../store'
 import logo from '../logo.png';
 
+import EditToolbar from './EditToolbar'
+
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -11,11 +13,10 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 
 const imageStyle = {
   "maxWidth": "10%",
-  "height": "10%",
+  "height": "auto",
 };
 
 export default function AppBanner() {
@@ -78,6 +79,9 @@ export default function AppBanner() {
         </Menu>        
 
     let menu = loggedOutMenu;
+    if (auth.loggedIn) {
+        menu = loggedInMenu;
+    }
     let buttonColor = 'white'
     if(store.type) {
         buttonColor = "grey"
