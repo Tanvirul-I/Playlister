@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom'
 import AuthContext from '../auth';
 import { GlobalStoreContext } from '../store'
+import logo from '../logo.png';
 
 import EditToolbar from './EditToolbar'
 
@@ -13,6 +14,11 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+
+const imageStyle = {
+  "maxWidth": "10%",
+  "height": "auto",
+};
 
 export default function AppBanner() {
     const { auth } = useContext(AuthContext);
@@ -97,16 +103,9 @@ export default function AppBanner() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" style={{ background: '#242424' }}>
                 <Toolbar>
-                    <Typography                        
-                        variant="h4"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}                        
-                    >
-                        <Link style={{ textDecoration: 'none', color: buttonColor }} to='/'>⌂</Link>
-                    </Typography>
+                    <Link to='/'><img style={imageStyle} src={logo}/></Link>
                     <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton

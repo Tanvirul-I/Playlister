@@ -12,15 +12,12 @@ import {
     WorkspaceScreen
 } from './components'
 /*
-    This is our application's top-level component.
-    
-    @author McKilla Gorilla
-*/
-/*
+  This is our application's top-level component.
   This is the entry-point for our application. Notice that we
   inject our store into all the components in our application.
   
   @author McKilla Gorilla
+  @quthor Tanvirul Islam
 */
 const App = () => {   
     return (

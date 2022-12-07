@@ -9,6 +9,7 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
@@ -36,24 +37,9 @@ export default function LoginScreen() {
     };
 
     return (
-        <Grid container component="main" sx={{ height: '100vh' }}>
+        <Container component="main" maxWidth="xs">
             <MUIErrorModal />
             <CssBaseline />
-            <Grid
-                item
-                xs={false}
-                sm={4}
-                md={7}
-                sx={{
-                    backgroundImage: 'url(https://source.unsplash.com/random)',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundColor: (t) =>
-                        t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                }}
-            />
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <Box
                     sx={{
                         my: 8,
@@ -103,11 +89,6 @@ export default function LoginScreen() {
                             Sign In
                         </Button>
                         <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
                             <Grid item>
                                 <Link href="/register" variant="body2">
                                     {"Don't have an account? Sign Up"}
@@ -117,7 +98,6 @@ export default function LoginScreen() {
                         <Copyright sx={{ mt: 5 }} />
                     </Box>
                 </Box>
-            </Grid>
-        </Grid>
+            </Container>
     );
 }
