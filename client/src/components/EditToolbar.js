@@ -1,68 +1,87 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react';
 import { GlobalStoreContext } from '../store'
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import RedoIcon from '@mui/icons-material/Redo';
-import UndoIcon from '@mui/icons-material/Undo';
-import CloseIcon from '@mui/icons-material/HighlightOff';
 
-/*
-    This toolbar is a functional React component that
-    manages the undo/redo/close buttons.
-    
-    @author McKilla Gorilla
-*/
-function EditToolbar() {
+import { TextField, Toolbar, MenuItem, Menu, Button, Box, AppBar } from '@mui/material';
+import { Sort, Home, Groups, Person } from '@mui/icons-material';
+
+const imageStyle = {
+  "maxWidth": "10%",
+  "height": "10%",
+};
+
+export default function AppBanner() {
     const { store } = useContext(GlobalStoreContext);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [ search, setSearch ] = useState("Search");
+    const isMenuOpen = Boolean(anchorEl);
 
-    function handleAddNewSong() {
-        store.addNewSong();
+    const handleSortMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    function handleUpdateTitle(event) {
+        setSearch(event.target.value);
     }
-    function handleUndo() {
-        store.undo();
-    }
-    function handleRedo() {
-        store.redo();
-    }
-    function handleClose() {
-        store.closeCurrentList();
-    }
-    const addSong = !store.canAddNewSong() || store.type
-    const undo = !store.canUndo() || store.type
-    const redo = !store.canRedo() || store.type
-    const close = !store.canClose() || store.type
+
     return (
-        <div id="edit-toolbar">
-            <Button
-                disabled={addSong}
-                id='add-song-button'
-                onClick={handleAddNewSong}
-                variant="contained">
-                <AddIcon />
-            </Button>
-            <Button 
-                disabled={undo}
-                id='undo-button'
-                onClick={handleUndo}
-                variant="contained">
-                    <UndoIcon />
-            </Button>
-            <Button 
-                disabled={redo}
-                id='redo-button'
-                onClick={handleRedo}
-                variant="contained">
-                    <RedoIcon />
-            </Button>
-            <Button 
-                disabled={close}
-                id='close-button'
-                onClick={handleClose}
-                variant="contained">
-                    <CloseIcon />
-            </Button>
-        </div>
-    )
+        <Box sx={{ flexGrow: 1 }} id="edit-toolbar">
+            <AppBar position="static" style={{ background: '#242424' }}>
+                <Toolbar>
+                    <Home size="large"></Home>
+                    <Groups size="large" sx = {{ position: "absolute", left: "5%" }}></Groups>
+                    <Person size="large" sx = {{ position: "absolute", left: "8%" }}></Person>
+                        <TextField
+                            margin="normal"
+                            id="search"
+                            label="Search"
+                            name="search"
+                            size="small"
+                            sx = {{background: 'white', color: 'black', position: "absolute", left: "40%", width: "40%",
+                            fontSize: "1px" }}
+                        />
+                        <Button
+                            size="large"
+                            edge="end"
+                            aria-label="Sort List"
+                            aria-controls='primary-sort-list-menu'
+                            aria-haspopup="true"
+                            onClick={handleSortMenuOpen}
+                            sx = {{background: 'grey', color: 'black', position: "absolute", right: "1%",
+                            ':hover': {
+                                bgcolor: 'white',
+                                color: 'black',
+                            } }}
+                        >
+                         Sort By
+                         <Sort size="large"></Sort>
+                        </Button>
+                </Toolbar>
+            </AppBar>
+            <Menu
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                id='primary-sort-list-menu'
+                keepMounted
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                open={isMenuOpen}
+                onClose={handleMenuClose}
+            >
+                <MenuItem onClick={handleMenuClose}>Name (A - Z)</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Publish Date (Newest)</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Listens (High - Low)</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Likes (High - Low)</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Dislikes (High - Low)</MenuItem>
+            </Menu>
+        </Box>
+    );
 }
-
-export default EditToolbar;

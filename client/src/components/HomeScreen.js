@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
-import ListCard from './ListCard.js'
+import ListCard from './ListCard'
 import MUIDeleteModal from './MUIDeleteModal'
 
 import List from '@mui/material/List';
@@ -20,6 +20,7 @@ const HomeScreen = () => {
         store.createNewList();
     }
     let listCard = "";
+    
     if (store) {
         listCard = 
             <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
@@ -34,7 +35,11 @@ const HomeScreen = () => {
             }
             </List>;
     }
-    return (
+    
+    if(store.idNamePairs.length == 0)
+        return null
+    else
+        return (
         <div id="playlist-selector">
             <div id="list-selector-list">
                 {
