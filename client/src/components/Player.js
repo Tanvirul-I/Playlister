@@ -35,7 +35,7 @@ export default function Player () {
         </Button>
         <YoutubePlayer/>
         <div className="player-buttons">
-            <SkipPrevious sx={ {
+            <Button><SkipPrevious sx={ {
                 background: 'black',
                 color: 'white',
                 ':hover': {
@@ -45,8 +45,8 @@ export default function Player () {
                 "fontSize": "100%",
                 minWidth: '6vw', minHeight: '3vw'
             }}>
-            </SkipPrevious>
-            <Stop sx={ {
+            </SkipPrevious></Button>
+            <Button><Stop sx={ {
                 background: 'black',
                 color: 'white',
                 ':hover': {
@@ -56,8 +56,8 @@ export default function Player () {
                 "fontSize": "100%",
                 minWidth: '6vw', minHeight: '3vw'
             }}>
-            </Stop>
-            <PlayArrow sx={ {
+            </Stop></Button>
+            <Button><PlayArrow sx={ {
                 background: 'black',
                 color: 'white',
                 ':hover': {
@@ -67,8 +67,8 @@ export default function Player () {
                 "fontSize": "100%",
                 minWidth: '6vw', minHeight: '3vw'
             }}>
-            </PlayArrow>
-            <SkipNext sx={ {
+            </PlayArrow></Button>
+            <Button><SkipNext sx={ {
                 background: 'black',
                 color: 'white',
                 ':hover': {
@@ -78,7 +78,7 @@ export default function Player () {
                 "fontSize": "100%",
                 minWidth: '6vw', minHeight: '3vw'
             }}>
-            </SkipNext>
+            </SkipNext></Button>
         </div>
 
         <div style={{"position": "absolute", left: "35%", fontSize: "45px"}}>

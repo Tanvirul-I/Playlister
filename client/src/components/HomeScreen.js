@@ -28,7 +28,9 @@ const HomeScreen = () => {
 
     async function handleCreateNewList() {
         await store.createNewList();
-        return () => setRand(value => value + 1);
+        console.log("test")
+        setRand(rand + 1);
+        console.log(rand == 1)
     }
 
     async function handleDeleteList(event, id) {
@@ -38,7 +40,12 @@ const HomeScreen = () => {
         store.markListForDeletion(id);
     }
 
-    function handleDuplicateList(event, id) {
+    function handleDuplicateList(event) {
+        store.duplicateList()
+    }
+
+    function handlePublishList(event) {
+        store.publishList()
     }
 
     let listCard = "";
@@ -85,7 +92,7 @@ const HomeScreen = () => {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ bgcolor: 'black', width: "20%", top: '0%', position: 'absolute', right: '1%',
+                        sx={{ bgcolor: 'black', width: "10%", top: '0%', position: 'absolute', right: '1%', fontSize: '10px',
                         ':hover': {
                             bgcolor: 'white',
                             color: 'black',
@@ -100,16 +107,31 @@ const HomeScreen = () => {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ bgcolor: 'black', width: "20%", top: '0%', position: 'absolute', right: '25%',
+                        sx={{ bgcolor: 'black', width: "10%", top: '0%', position: 'absolute', right: '11%', fontSize: '10px',
                         ':hover': {
                             bgcolor: 'white',
                             color: 'black',
                         } }}
                         onClick={(event) => {
-                            handleDuplicateList(event, store.currentList._id)
+                            handleDuplicateList(event)
                         }}
                     >
                         Duplicate
+                    </Button>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ bgcolor: 'black', width: "10%", top: '0%', position: 'absolute', right: '21%', fontSize: '10px',
+                        ':hover': {
+                            bgcolor: 'white',
+                            color: 'black',
+                        } }}
+                        onClick={(event) => {
+                            handlePublishList(event, store.currentList._id)
+                        }}
+                    >
+                        Publish
                     </Button>
                     <Toolbar></Toolbar>
                     {

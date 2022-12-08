@@ -15,11 +15,17 @@ export default function AppBanner() {
     const [ search, setSearch ] = useState("Search");
     const isMenuOpen = Boolean(anchorEl);
 
-    let activeSelection = "home"
+    let activeSelection = store.sortLoc;
+
+    console.log(activeSelection)
 
     const handleSortMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
+    const clickedChange = (event, type) => {
+        store.setSortLoc(type)
+    }
 
     const handleMenuClose = () => {
         setAnchorEl(null);
@@ -29,19 +35,17 @@ export default function AppBanner() {
         setSearch(event.target.value);
     }
 
-    let home = activeSelection == "home" ? (<Home size="large" sx = {{ background: "green", fontSize:'30pt' }}></Home>) : (<Home size="large"></Home>)
-    let groups = activeSelection == "all" ? (<Groups size="large" sx = {{ position: "absolute", left: "7%", background: "green", fontSize:'30pt', fontSize:'30pt' }}></Groups>) :
-     (<Groups size="large" sx = {{ position: "absolute", left: "7%", fontSize:'30pt' }}></Groups>)
-    let person = activeSelection == "person" ? (<Person size="large" sx = {{ position: "absolute", left: "10%", background: "green", fontSize:'30pt' }}></Person>) :
-     (<Person size="large" sx = {{ position: "absolute", left: "12%", fontSize:'30pt' }}></Person>)
+    let home = (<Home size="large" sx = {{ fontSize:'30pt' }}></Home>) 
+    let groups = (<Groups size="large" sx = {{ fontSize:'30pt' }}></Groups>) 
+    let person = (<Person size="large" sx = {{ fontSize:'30pt' }}></Person>)
 
     return (
         <Box sx={{ flexGrow: 1 }} id="edit-toolbar">
             <AppBar position="static" style={{ background: '#242424' }}>
                 <Toolbar>
-                    {home}
-                    {groups}
-                    {person}
+                    {activeSelection == "home" ? <Button sx={{color:'green'}} >{home}</Button> : <Button sx={{color:'white'}} onClick={(event) => {clickedChange(event, "home")}}>{home}</Button>}
+                    {activeSelection == "groups" ? <Button sx={{color:'green'}} >{groups}</Button> : <Button sx={{color:'white'}} onClick={(event) => {clickedChange(event, "groups")}}>{groups}</Button>}
+                    {activeSelection == "person" ? <Button sx={{color:'green'}} >{person}</Button> : <Button sx={{color:'white'}} onClick={(event) => {clickedChange(event, "person")}}>{person}</Button>}
                         <TextField
                             margin="normal"
                             id="search"

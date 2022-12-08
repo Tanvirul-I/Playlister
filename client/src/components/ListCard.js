@@ -18,6 +18,7 @@ function ListCard(props) {
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const { idNamePair, selected } = props;
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
     let author = "Test"
 
@@ -38,6 +39,7 @@ function ListCard(props) {
     }
 
     function handleDuplicateList(event) {
+        store.duplicateList()
     }
 
     function handleCloseList(event) {
@@ -108,7 +110,7 @@ function ListCard(props) {
                         color: 'white',
                     }}}></ThumbDown>
                 <Typography variant="h3">{idNamePair.name}</Typography>
-                <Typography variant="h6">Published: {author}</Typography>
+                <Typography variant="h6">Published: {new Date(idNamePair.published).toLocaleString()}</Typography>
                 <Typography variant="h6">Author: {idNamePair.username}</Typography>
                 <Typography variant="h6" sx = {{position: "absolute", right: "50%", bottom: "10%"}}
                 >Listens: {idNamePair.ratings.listens}</Typography>
@@ -234,10 +236,10 @@ function ListCard(props) {
                             color: 'white',
                         }}}></ThumbDown>
                     <Typography variant="h3">{idNamePair.name}</Typography>
-                    <Typography variant="h6">Published: {idNamePair.author}</Typography>
+                    <Typography variant="h6">Published: {new Date(idNamePair.published).toLocaleString()}</Typography>
                     <Typography variant="h6">Author: {idNamePair.username}</Typography>
                     <Typography variant="h6" sx = {{position: "absolute", right: "77%", bottom: "10%"}}
-                    >Listens: {author}</Typography>
+                    >Listens: {idNamePair.ratings.listens}</Typography>
                     <ExpandLess sx = {{background: '#949494', color: 'black', position: "absolute", right: "1%", bottom: "5%",
                         fontSize: "50px",
                         ':hover': {
@@ -352,7 +354,7 @@ function ListCard(props) {
                         color: 'white',
                     }}}></ThumbDown>
                 <Typography variant="h3">{idNamePair.name}</Typography>
-                <Typography variant="h6">Published: {author}</Typography>
+                <Typography variant="h6">Published: {new Date(idNamePair.published).toLocaleString()}</Typography>
                 <Typography variant="h6">Author: {idNamePair.username}</Typography>
                 <Typography variant="h6" sx = {{position: "absolute", right: "50%", bottom: "10%"}}
                 >Listens: {idNamePair.ratings.listens}</Typography>
