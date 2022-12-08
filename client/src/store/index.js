@@ -86,7 +86,8 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    errorMessage: null
+                    errorMessage: null,
+                    editingList: store.editingList
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -101,7 +102,8 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    errorMessage: null
+                    errorMessage: null,
+                    editingList: store.editingList
                 })
             }
             // CREATE A NEW LIST
@@ -116,7 +118,8 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    errorMessage: null
+                    errorMessage: null,
+                    editingList: store.editingList
                 })
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -131,7 +134,8 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    errorMessage: null
+                    errorMessage: null,
+                    editingList: store.editingList
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -146,7 +150,8 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: payload.id,
                     listMarkedForDeletion: payload.playlist,
-                    errorMessage: null
+                    errorMessage: null,
+                    editingList: store.editingList
                 });
             }
             // REMOVE DELETE LIST
@@ -154,14 +159,15 @@ function GlobalStoreContextProvider(props) {
                 return setStore({
                     currentModal : CurrentModal.NONE,
                     idNamePairs: store.idNamePairs,
-                    currentList: null,
+                    currentList: store.currentList,
                     currentSongIndex: -1,
                     currentSong: null,
                     newListCounter: store.newListCounter,
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    errorMessage: null
+                    errorMessage: null,
+                    editingList: null
                 });
             }
             // UPDATE A LIST
@@ -176,7 +182,8 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    errorMessage: null
+                    errorMessage: null,
+                    editingList: store.editingList
                 });
             }
             // START EDITING A LIST NAME
@@ -191,7 +198,8 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: true,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    errorMessage: null
+                    errorMessage: null,
+                    editingList: store.editingList
                 });
             }
             // 
@@ -207,6 +215,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     errorMessage: null,
+                    editingList: store.editingList,
                     type: "edit"
                 });
             }
@@ -222,6 +231,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     errorMessage: null,
+                    editingList: store.editingList,
                     type: "remove"
                 });
             }
@@ -237,6 +247,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     errorMessage: payload.message,
+                    editingList: store.editingList,
                     type: "error"
                 });
             }
@@ -251,7 +262,8 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    errorMessage: null
+                    errorMessage: null,
+                    editingList: store.editingList
                 });
             }
             case GlobalStoreActionType.TOGGLE_LIST_EDIT: {
@@ -377,6 +389,7 @@ function GlobalStoreContextProvider(props) {
         getListToDelete(id);
     }
     store.unmarkListForDeletion = function () {
+        tps.clearAllTransactions();
         storeReducer({
             type: GlobalStoreActionType.UNMARK_LIST_FOR_DELETION,
             payload: {}
@@ -437,6 +450,7 @@ function GlobalStoreContextProvider(props) {
     }
 
     store.toggleListEdit = (toggle) => {
+        tps.clearAllTransactions();
         storeReducer({
             type: GlobalStoreActionType.TOGGLE_LIST_EDIT,
             payload: toggle

@@ -34,7 +34,10 @@ function ListCard(props) {
     }
 
     function handleEditList(event) {
-        store.editCurrentList();
+        store.toggleListEdit(true);
+    }
+
+    function handleDuplicateList(event) {
     }
 
     function handleCloseList(event) {
@@ -147,17 +150,18 @@ function ListCard(props) {
                     <Box>
                     <List 
                         id="playlist-cards" 
-                        sx={{ width: '100%', bgcolor: 'background.paper' }}
+                        sx={{ width: '100%', background: 'black' }}
                     >
                         {
-                            store.currentList.songs.map((song, index) => (
+                            store.currentList.songs.length > 0 ? store.currentList.songs.map((song, index) => (
                                 <SongCard
                                     id={'playlist-song-' + (index)}
                                     key={'playlist-song-' + (index)}
                                     index={index}
                                     song={song}
+                                    type="song"
                                 />
-                            ))  
+                            )) :  <Typography variant="h5" sx={{color: 'white'}}>Empty Playlist</Typography>
                         }
                     </List>
                         <Button
@@ -169,6 +173,9 @@ function ListCard(props) {
                                 bgcolor: 'white',
                                 color: 'black',
                             } }}
+                            onClick={(event) => {
+                                handleEditList(event)
+                            }}
                         >
                             Edit
                         </Button>
@@ -181,6 +188,9 @@ function ListCard(props) {
                                 bgcolor: 'white',
                                 color: 'black',
                             } }}
+                            onClick={(event) => {
+                                handleDeleteList(event, idNamePair._id)
+                            }}
                         >
                             Delete
                         </Button>
@@ -193,6 +203,9 @@ function ListCard(props) {
                                 bgcolor: 'white',
                                 color: 'black',
                             } }}
+                            onClick={(event) => {
+                                handleDuplicateList(event)
+                            }}
                         >
                             Duplicate
                         </Button>
@@ -238,17 +251,18 @@ function ListCard(props) {
                     <Box>
                     <List 
                         id="playlist-cards" 
-                        sx={{ width: '100%', bgcolor: 'background.paper' }}
+                        sx={{ width: '100%', background: 'black' }}
                     >
                         {
-                            store.currentList.songs.map((song, index) => (
+                            store.currentList.songs.length > 0 ? store.currentList.songs.map((song, index) => (
                                 <SongCard
                                     id={'playlist-song-' + (index)}
                                     key={'playlist-song-' + (index)}
                                     index={index}
                                     song={song}
+                                    type="song"
                                 />
-                            ))  
+                            )) :  <Typography variant="h5" sx={{color: 'white'}}>Empty Playlist</Typography>
                         }
                     </List>
                         <Button
@@ -260,6 +274,9 @@ function ListCard(props) {
                                 bgcolor: 'white',
                                 color: 'black',
                             } }}
+                            onClick={(event) => {
+                                handleDeleteList(event, idNamePair._id)
+                            }}
                         >
                             Delete
                         </Button>

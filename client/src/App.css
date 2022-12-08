@@ -151,12 +151,8 @@ body {
 .list-card,
 .selected-list-card,
 .unselected-list-card {
-  font-size: 18pt;
-  margin: 10px;
-  padding: 20px;
   border-radius: 25px;
   width: 5%;
-  background: var(--swatch-foundation)
 }
 
 .selected-list-card {
@@ -175,7 +171,7 @@ body {
 .unselected-list-card:hover {
   cursor: pointer;
   background-color: var(--swatch-contrast);
-  color: white;
+  color: black;
 }
 
 .unselected-list-card {
@@ -258,7 +254,7 @@ body {
 }
 
 #list-selector-list > * {
-  margin: 0 0 0 2%;
+  margin: 2% 0 0 2%;
 }
 
 #list-selector-list > ul > * {
