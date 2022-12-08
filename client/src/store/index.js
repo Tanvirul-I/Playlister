@@ -375,7 +375,6 @@ function GlobalStoreContextProvider(props) {
             payload: {}
         });
         tps.clearAllTransactions();
-        history.push("/");
     }
 
     // THIS FUNCTION CREATES A NEW LIST
@@ -389,7 +388,7 @@ function GlobalStoreContextProvider(props) {
                 type: GlobalStoreActionType.CREATE_NEW_LIST,
                 payload: newList
             });
-            return;
+            window.location.reload()
         }
         else {
             console.log("API FAILED TO CREATE A NEW LIST");
@@ -406,7 +405,7 @@ function GlobalStoreContextProvider(props) {
                 payload: newList
             }
             );
-            return history.push('/')
+            window.location.reload()
         }
         else {
             console.log("API FAILED TO CREATE A NEW LIST");
@@ -420,7 +419,7 @@ function GlobalStoreContextProvider(props) {
         async function asyncUpdateCurrentList() {
             const response = await api.updatePlaylistById(store.currentList._id, store.currentList);
             if (response.data.success) {
-                history.push("/")
+                window.location.reload()
             }
         }
         asyncUpdateCurrentList();
