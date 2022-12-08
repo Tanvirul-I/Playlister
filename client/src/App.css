@@ -159,6 +159,11 @@ body {
   background: var(--swatch-foundation)
 }
 
+.selected-list-card {
+  background-color: var(--swatch-accent);
+  color: white;
+}
+
 .list-card:aria-disabled,
 .list-card[aria-disabled] {
   border: 1px solid #999999;
@@ -170,11 +175,6 @@ body {
 .unselected-list-card:hover {
   cursor: pointer;
   background-color: var(--swatch-contrast);
-  color: white;
-}
-
-.selected-list-card {
-  background-color: var(--swatch-accent);
   color: white;
 }
 

@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
+import SongCard from './SongCard.js'
 
-import { Box, ListItem, TextField, Typography } from '@mui/material'
+import { Box, ListItem, TextField, Typography, List, Button } from '@mui/material'
 import { ExpandMore, ExpandLess, ThumbUp, ThumbDown } from '@mui/icons-material';
 
 /*
@@ -30,6 +31,14 @@ function ListCard(props) {
             // CHANGE THE CURRENT LIST
             store.setCurrentList(id);
         }
+    }
+
+    function handleEditList(event) {
+        store.editCurrentList();
+    }
+
+    function handleCloseList(event) {
+        store.closeCurrentList();
     }
 
     function handleToggleEdit(event) {
@@ -80,10 +89,8 @@ function ListCard(props) {
             button
             onClick={(event) => {
                 if (event.detail === 2) {
-                    console.log("test")
                     handleToggleEdit(event)
                 }
-                //handleLoadList(event, idNamePair._id)
             }}
         >
             <Box sx={{ p: 1, flexGrow: 1 }}>
@@ -99,16 +106,251 @@ function ListCard(props) {
                     }}}></ThumbDown>
                 <Typography variant="h3">{idNamePair.name}</Typography>
                 <Typography variant="h6">Published: {author}</Typography>
-                <Typography variant="h6">Author: {author}</Typography>
+                <Typography variant="h6">Author: {idNamePair.username}</Typography>
                 <Typography variant="h6" sx = {{position: "absolute", right: "50%", bottom: "10%"}}
-                >Listens: {author}</Typography>
+                >Listens: {idNamePair.ratings.listens}</Typography>
                 <ExpandMore sx = {{background: '#949494', color: 'black', position: "absolute", right: "1%", bottom: "5%",
                     fontSize: "50px",
                     ':hover': {
                         color: 'white',
-                    }}}></ExpandMore>
+                    }}}
+                    onClick={(event) => {
+                        handleLoadList(event, idNamePair._id)
+                    }}
+                    ></ExpandMore>
             </Box>
         </ListItem>
+
+
+    if(store.currentList && store.currentList._id == idNamePair._id && idNamePair.published == -1) {
+        cardElement = 
+        <div>
+            <ListItem
+                id={idNamePair._id}
+                key={idNamePair._id}
+                sx={{ marginTop: '15px', display: 'flex', p: 1 }}
+                style={{ width: '100%', fontSize: '30pt', height: '50%' }}
+                button>
+                <Box sx={{ p: 1, flexGrow: 1 }}>
+                    <Typography variant="h3">{idNamePair.name}</Typography>
+                    <Typography variant="h6">Author: {idNamePair.username}</Typography>
+                    <ExpandLess sx = {{background: '#949494', color: 'black', position: "absolute", right: "1%", bottom: "5%",
+                        fontSize: "50px",
+                        ':hover': {
+                            color: 'white',
+                        }}}
+                        onClick={(event) => {
+                            handleCloseList(event)
+                        }}
+                        ></ExpandLess>
+                    
+                    <Box>
+                    <List 
+                        id="playlist-cards" 
+                        sx={{ width: '100%', bgcolor: 'background.paper' }}
+                    >
+                        {
+                            store.currentList.songs.map((song, index) => (
+                                <SongCard
+                                    id={'playlist-song-' + (index)}
+                                    key={'playlist-song-' + (index)}
+                                    index={index}
+                                    song={song}
+                                />
+                            ))  
+                        }
+                    </List>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2, bgcolor: 'black', left: "30%", top: "15%", width: "17%",
+                            ':hover': {
+                                bgcolor: 'white',
+                                color: 'black',
+                            } }}
+                        >
+                            Edit
+                        </Button>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2, bgcolor: 'black', left: "35%", top: "15%", width: "17%",
+                            ':hover': {
+                                bgcolor: 'white',
+                                color: 'black',
+                            } }}
+                        >
+                            Delete
+                        </Button>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2, bgcolor: 'black', left: "40%", top: "15%", width: "17%",
+                            ':hover': {
+                                bgcolor: 'white',
+                                color: 'black',
+                            } }}
+                        >
+                            Duplicate
+                        </Button>
+                    </Box>
+                </Box>
+            </ListItem>
+        </div>
+    } else if(store.currentList && store.currentList._id == idNamePair._id && idNamePair.published != -1) {
+        cardElement = 
+        <div>
+            <ListItem
+                id={idNamePair._id}
+                key={idNamePair._id}
+                sx={{ marginTop: '15px', display: 'flex', p: 1 }}
+                style={{ width: '100%', fontSize: '30pt', height: '50%' }}
+                button>
+                <Box sx={{ p: 1, flexGrow: 1 }}>
+                    <ThumbUp sx = {{ color: 'black', position: "absolute", right: "40%",
+                        fontSize: "50px",
+                        ':hover': {
+                            color: 'white',
+                        }}}></ThumbUp>
+                    <ThumbDown sx = {{ color: 'black', position: "absolute", right: "15%",
+                        fontSize: "50px",
+                        ':hover': {
+                            color: 'white',
+                        }}}></ThumbDown>
+                    <Typography variant="h3">{idNamePair.name}</Typography>
+                    <Typography variant="h6">Published: {idNamePair.author}</Typography>
+                    <Typography variant="h6">Author: {idNamePair.username}</Typography>
+                    <Typography variant="h6" sx = {{position: "absolute", right: "77%", bottom: "10%"}}
+                    >Listens: {author}</Typography>
+                    <ExpandLess sx = {{background: '#949494', color: 'black', position: "absolute", right: "1%", bottom: "5%",
+                        fontSize: "50px",
+                        ':hover': {
+                            color: 'white',
+                        }}}
+                        onClick={(event) => {
+                            handleCloseList(event)
+                        }}
+                        ></ExpandLess>
+                    
+                    <Box>
+                    <List 
+                        id="playlist-cards" 
+                        sx={{ width: '100%', bgcolor: 'background.paper' }}
+                    >
+                        {
+                            store.currentList.songs.map((song, index) => (
+                                <SongCard
+                                    id={'playlist-song-' + (index)}
+                                    key={'playlist-song-' + (index)}
+                                    index={index}
+                                    song={song}
+                                />
+                            ))  
+                        }
+                    </List>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2, bgcolor: 'black', left: "35%", top: "15%", width: "17%",
+                            ':hover': {
+                                bgcolor: 'white',
+                                color: 'black',
+                            } }}
+                        >
+                            Delete
+                        </Button>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2, bgcolor: 'black', left: "40%", top: "15%", width: "17%",
+                            ':hover': {
+                                bgcolor: 'white',
+                                color: 'black',
+                            } }}
+                        >
+                            Duplicate
+                        </Button>
+                    </Box>
+                </Box>
+            </ListItem>
+        </div>
+
+    } else if(idNamePair.published == -1) {
+        cardElement = 
+        <ListItem
+            id={idNamePair._id}
+            key={idNamePair._id}
+            sx={{ marginTop: '15px', display: 'flex', p: 1 }}
+            style={{ width: '100%', fontSize: '30pt' }}
+            button
+            onClick={(event) => {
+                if (event.detail === 2) {
+                    handleToggleEdit(event)
+                }
+            }}
+        >
+            <Box sx={{ p: 1, flexGrow: 1 }}>
+                <Typography variant="h3">{idNamePair.name}</Typography>
+                <Typography variant="h6">Author: {idNamePair.username}</Typography>
+                <Typography variant="h6" sx = {{position: "absolute", right: "50%", bottom: "10%"}}></Typography>
+                <ExpandMore sx = {{background: '#949494', color: 'black', position: "absolute", right: "1%", bottom: "5%",
+                    fontSize: "50px",
+                    ':hover': {
+                        color: 'white',
+                    }}}
+                    onClick={(event) => {
+                        handleLoadList(event, idNamePair._id)
+                    }}
+                    ></ExpandMore>
+            </Box>
+        </ListItem>
+    } else {
+        cardElement = 
+        <ListItem
+            id={idNamePair._id}
+            key={idNamePair._id}
+            sx={{ marginTop: '15px', display: 'flex', p: 1 }}
+            style={{ width: '100%', fontSize: '30pt' }}
+            button
+            onClick={(event) => {
+                if (event.detail === 2) {
+                    handleToggleEdit(event)
+                }
+            }}
+        >
+            <Box sx={{ p: 1, flexGrow: 1 }}>
+                <ThumbUp sx = {{ color: 'black', position: "absolute", right: "40%",
+                    fontSize: "50px",
+                    ':hover': {
+                        color: 'white',
+                    }}}></ThumbUp>
+                <ThumbDown sx = {{ color: 'black', position: "absolute", right: "15%",
+                    fontSize: "50px",
+                    ':hover': {
+                        color: 'white',
+                    }}}></ThumbDown>
+                <Typography variant="h3">{idNamePair.name}</Typography>
+                <Typography variant="h6">Published: {author}</Typography>
+                <Typography variant="h6">Author: {idNamePair.username}</Typography>
+                <Typography variant="h6" sx = {{position: "absolute", right: "50%", bottom: "10%"}}
+                >Listens: {idNamePair.ratings.listens}</Typography>
+                <ExpandMore sx = {{background: '#949494', color: 'black', position: "absolute", right: "1%", bottom: "5%",
+                    fontSize: "50px",
+                    ':hover': {
+                        color: 'white',
+                    }}}
+                    onClick={(event) => {
+                        handleLoadList(event, idNamePair._id)
+                    }}
+                    ></ExpandMore>
+            </Box>
+        </ListItem>
+    }
 
     if (editActive) {
         cardElement =

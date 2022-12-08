@@ -7,13 +7,53 @@ const User = require('../models/user-model');
     
     @author McKilla Gorilla
 */
-createPlaylist = (req, res) => {
+createPlaylist = async (req, res) => {
     const body = req.body;
 
     if (!body) {
         return res.status(400).json({
             success: false,
             error: 'You must provide a Playlist',
+        })
+    }
+
+    let nameExists = false;
+
+    body["ratings"] = {
+        "likes": 0,
+        "dislikes": 0,
+        "listens": 0
+    };
+    body["comments"] = [];
+    body["published"] = -1;
+
+    console.log(body)
+
+    await Playlist.findOne({ name: body.name, ownerEmail: body.ownerEmail }, (err, playlist) => {
+        console.log(playlist)
+        if(playlist) {
+            nameExists = true;
+        }
+    })
+    let counter = 0;
+
+    while(nameExists) {
+        console.log("Loop")
+        console.log(body.name)
+        await Playlist.findOne({ name: body.name, ownerEmail: body.ownerEmail }, (err, playlist) => {
+            console.log(playlist)
+            if(playlist) {
+                counter++;
+                body.name = "Untitled" + counter;
+                return false
+            } else {
+                return true
+            }
+        }).then((result) => {
+            if(result) {
+                console.log(body.name)
+                nameExists = false
+            }
         })
     }
 
@@ -53,7 +93,7 @@ deletePlaylist = async (req, res) => {
         // DOES THIS LIST BELONG TO THIS USER?
         async function asyncFindUser(list) {
             User.findOne({ email: list.ownerEmail }, (err, user) => {
-                if (user._id == req.userId && list.ownerEmail == user.email) {
+                if (user && user._id == req.userId && list.ownerEmail == user.email) {
                     Playlist.findOneAndDelete({ _id: req.params.id }, () => {
                         return res.status(200).json({
                             "success": true
@@ -108,11 +148,7 @@ getPlaylistPairs = async (req, res) => {
                     let pairs = [];
                     for (let key in playlists) {
                         let list = playlists[key];
-                        let pair = {
-                            _id: list._id,
-                            name: list.name
-                        };
-                        pairs.push(pair);
+                        pairs.push(list);
                     }
                     return res.status(200).json({ success: true, idNamePairs: pairs })
                 }

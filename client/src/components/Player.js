@@ -35,7 +35,7 @@ export default function Player () {
         </Button>
         <YoutubePlayer/>
         <div className="player-buttons">
-            <SkipPrevious disableElevation sx={ {
+            <SkipPrevious sx={ {
                 background: 'black',
                 color: 'white',
                 ':hover': {
@@ -46,7 +46,7 @@ export default function Player () {
                 minWidth: '6vw', minHeight: '3vw'
             }}>
             </SkipPrevious>
-            <Stop disableElevation sx={ {
+            <Stop sx={ {
                 background: 'black',
                 color: 'white',
                 ':hover': {
@@ -57,7 +57,7 @@ export default function Player () {
                 minWidth: '6vw', minHeight: '3vw'
             }}>
             </Stop>
-            <PlayArrow disableElevation sx={ {
+            <PlayArrow sx={ {
                 background: 'black',
                 color: 'white',
                 ':hover': {
@@ -68,7 +68,7 @@ export default function Player () {
                 minWidth: '6vw', minHeight: '3vw'
             }}>
             </PlayArrow>
-            <SkipNext disableElevation sx={ {
+            <SkipNext sx={ {
                 background: 'black',
                 color: 'white',
                 ':hover': {

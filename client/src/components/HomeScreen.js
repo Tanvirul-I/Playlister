@@ -1,5 +1,6 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { GlobalStoreContext } from '../store'
+
 import ListCard from './ListCard.js'
 import MUIDeleteModal from './MUIDeleteModal'
 
@@ -11,16 +12,19 @@ import Typography from '@mui/material/Typography'
     This React component lists all the playlister lists in the UI.
     
     @author McKilla Gorilla
+    @author Tanvirul Islam
 */
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
+    const [rand, setRand] = useState(0); // State used to force render
 
     useEffect(() => {
         store.loadIdNamePairs();
     }, []);
 
-    function handleCreateNewList() {
-        store.createNewList();
+    async function handleCreateNewList() {
+        await store.createNewList();
+        return () => setRand(value => value + 1);
     }
     let listCard = "";
     if (store) {

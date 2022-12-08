@@ -12,6 +12,7 @@ import AuthContext from '../auth'
     which makes use of things like actions and reducers. 
     
     @author McKilla Gorilla
+    @author Tanvirul Islam
 */
 
 // THIS IS THE CONTEXT WE'LL USE TO SHARE OUR STORE
@@ -31,7 +32,8 @@ export const GlobalStoreActionType = {
     EDIT_SONG: "EDIT_SONG",
     REMOVE_SONG: "REMOVE_SONG",
     ERROR: "ERROR",
-    HIDE_MODALS: "HIDE_MODALS"
+    HIDE_MODALS: "HIDE_MODALS",
+    TOGGLE_LIST_EDIT: "TOGGLE_LIST_EDIT"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -59,7 +61,8 @@ function GlobalStoreContextProvider(props) {
         listNameActive: false,
         listIdMarkedForDeletion: null,
         listMarkedForDeletion: null,
-        errorMessage: null
+        errorMessage: null,
+        editingList: false
     });
     const history = useHistory();
 
@@ -251,6 +254,21 @@ function GlobalStoreContextProvider(props) {
                     errorMessage: null
                 });
             }
+            case GlobalStoreActionType.TOGGLE_LIST_EDIT: {
+                return setStore({
+                    currentModal : CurrentModal.NONE,
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    currentSongIndex: -1,
+                    currentSong: null,
+                    newListCounter: store.newListCounter,
+                    listNameActive: false,
+                    listIdMarkedForDeletion: null,
+                    listMarkedForDeletion: null,
+                    errorMessage: null,
+                    editingList: payload
+                })
+            }
             default:
                 return store;
         }
@@ -306,7 +324,8 @@ function GlobalStoreContextProvider(props) {
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
         let newListName = "Untitled" + store.newListCounter;
-        const response = await api.createPlaylist(newListName, [], auth.user.email);
+        console.log(auth.user)
+        const response = await api.createPlaylist(newListName, [], auth.user.email, auth.user.username);
         if (response.status === 201) {
             tps.clearAllTransactions();
             let newList = response.data.playlist;
@@ -315,9 +334,7 @@ function GlobalStoreContextProvider(props) {
                 payload: newList
             }
             );
-
-            // IF IT'S A VALID LIST THEN LET'S START EDITING IT
-            history.push("/playlist/" + newList._id);
+            return
         }
         else {
             console.log("API FAILED TO CREATE A NEW LIST");
@@ -392,7 +409,7 @@ function GlobalStoreContextProvider(props) {
         storeReducer({
             type: GlobalStoreActionType.REMOVE_SONG,
             payload: {currentSongIndex: songIndex, currentSong: songToRemove}
-        });        
+        });
     }
     store.showErrorModal = (errorMessage) => {
         storeReducer({
@@ -419,6 +436,17 @@ function GlobalStoreContextProvider(props) {
         return store.currentModal === CurrentModal.ERROR;
     }
 
+    store.toggleListEdit = (toggle) => {
+        storeReducer({
+            type: GlobalStoreActionType.TOGGLE_LIST_EDIT,
+            payload: toggle
+        });
+    }
+
+    store.isEditingList = () => {
+        return store.editingCurrentList != null;
+    }
+
     // THE FOLLOWING 8 FUNCTIONS ARE FOR COORDINATING THE UPDATING
     // OF A LIST, WHICH INCLUDES DEALING WITH THE TRANSACTION STACK. THE
     // FUNCTIONS ARE setCurrentList, addMoveItemTransaction, addUpdateItemTransaction,
@@ -435,7 +463,7 @@ function GlobalStoreContextProvider(props) {
                         type: GlobalStoreActionType.SET_CURRENT_LIST,
                         payload: playlist
                     });
-                    history.push("/playlist/" + playlist._id);
+                    //history.push("/playlist/" + playlist._id);
                 }
             }
         }

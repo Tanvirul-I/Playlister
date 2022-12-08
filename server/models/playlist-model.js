@@ -5,15 +5,27 @@ const Schema = mongoose.Schema
     the database.
     
     @author McKilla Gorilla
+    @author Tanvirul Islam
 */
 const playlistSchema = new Schema(
     {
         name: { type: String, required: true },
         ownerEmail: { type: String, required: true },
+        published: { type: Number, required: true },
+        username: { type: String, required: true },
         songs: { type: [{
             title: String,
             artist: String,
             youTubeId: String
+        }], required: true },
+        ratings:{ type: {
+            likes: Number,
+            dislikes: Number,
+            listens: Number
+        }, required: true },
+        comments:{ type: [{
+            author: String,
+            comment: String,
         }], required: true }
     },
     { timestamps: true },
