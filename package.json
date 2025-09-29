@@ -1,0 +1,22 @@
+{
+  "name": "playlister",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  },
+  "scripts": {
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tanvirul-I/Playlister.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tanvirul-I/Playlister/issues"
+  },
+  "homepage": "https://github.com/Tanvirul-I/Playlister#readme",
+  "description": ""
+}
