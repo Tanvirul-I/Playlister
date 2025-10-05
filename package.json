@@ -1,29 +1,30 @@
 {
-  "name": "playlister",
-  "version": "1.0.0",
-  "main": "index.js",
-  "devDependencies": {
-    "prettier": "^3.6.2"
-  },
-  "scripts": {
-    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
-  },
-  "prettier": {
-    "trailingComma": "es5",
-    "singleQuote": false,
-    "printWidth": 100,
-    "tabWidth": 2,
-    "useTabs": false
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Tanvirul-I/Playlister.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Tanvirul-I/Playlister/issues"
-  },
-  "homepage": "https://github.com/Tanvirul-I/Playlister#readme",
-  "description": ""
+	"name": "playlister",
+	"version": "1.0.0",
+	"main": "index.js",
+	"devDependencies": {
+		"prettier": "^3.6.2"
+	},
+	"scripts": {
+		"pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
+		"deploy": "eb deploy"
+	},
+	"prettier": {
+		"trailingComma": "es5",
+		"singleQuote": false,
+		"printWidth": 100,
+		"tabWidth": 2,
+		"useTabs": false
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Tanvirul-I/Playlister.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Tanvirul-I/Playlister/issues"
+	},
+	"homepage": "https://github.com/Tanvirul-I/Playlister#readme",
+	"description": ""
 }

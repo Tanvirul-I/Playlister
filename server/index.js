@@ -65,9 +65,11 @@ const authLimiter = createRateLimiter({
 
 // SETUP OUR OWN ROUTERS AS MIDDLEWARE
 const authRouter = require("./routes/auth-router");
-app.use("/auth", authLimiter, authRouter);
+app.use("/api/auth", authLimiter, authRouter);
 const playlistsRouter = require("./routes/playlists-router");
-app.use("/api", globalApiLimiter, playlistsRouter);
+app.use("/api/playlists", globalApiLimiter, playlistsRouter);
+
+app.get("/api/health", (_req, res) => res.status(200).send("ok"));
 
 // INITIALIZE OUR DATABASE OBJECT
 const db = require("./db");
