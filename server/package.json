@@ -14,6 +14,7 @@
     "mongoose": "^5.7.5"
   },
   "scripts": {
+    "start": "node index.js",
     "test:unique-playlist-names": "node tests/unique-playlist-names.js",
     "test:playlist-guards": "node tests/unpublished-playlist-guards.js"
   }

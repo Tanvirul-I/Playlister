@@ -31,3 +31,8 @@ server/creds.json
 server/dev_creds.json
 
 client/build/
+server/.env.production
+server/.env.test
+client/.env.test
+client/.env.production
+client/.env.development

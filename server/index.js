@@ -17,14 +17,36 @@ const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:3000")
   .split(",")
   .map((origin) => origin.trim())
   .filter((origin) => origin.length > 0);
+
+if (!allowedOrigins.length) {
+  allowedOrigins.push("http://localhost:3000");
+}
+
 const allowAllOrigins = allowedOrigins.includes("*");
 
-app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    credentials: true,
-  })
-);
+const corsOptions = allowAllOrigins
+  ? {
+      origin: true,
+      credentials: true,
+    }
+  : {
+      origin(origin, callback) {
+        if (!origin) {
+          callback(null, true);
+          return;
+        }
+
+        if (allowedOrigins.includes(origin)) {
+          callback(null, true);
+          return;
+        }
+
+        callback(new Error("Not allowed by CORS"));
+      },
+      credentials: true,
+    };
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 

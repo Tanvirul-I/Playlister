@@ -12,8 +12,9 @@
 import axios from "axios";
 import { attachCsrfInterceptor } from "../../common/csrf";
 axios.defaults.withCredentials = true;
+const authBaseUrl = process.env.REACT_APP_AUTH_BASE_URL || "http://localhost:4000/auth";
 const api = axios.create({
-  baseURL: "http://localhost:4000/auth",
+  baseURL: authBaseUrl,
 });
 attachCsrfInterceptor(api);
 api.interceptors.response.use(
