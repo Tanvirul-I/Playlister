@@ -89,7 +89,7 @@ const ensureGuestAccount = async () => {
     {
       new: true,
       upsert: true,
-    },
+    }
   ).exec();
 
   return guestAccount;
@@ -118,8 +118,7 @@ getLoggedIn = async (req, res) => {
       }
 
       const guestId = guestAccount._id.toString();
-      const sessionUserId =
-        typeof session.userId === "string" ? session.userId : "";
+      const sessionUserId = typeof session.userId === "string" ? session.userId : "";
 
       const needsRefresh = !sessionUserId || sessionUserId !== guestId;
       if (needsRefresh) {
@@ -167,9 +166,7 @@ loginUser = async (req, res) => {
     const rememberMe = Boolean(rememberMeRaw);
 
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({ errorMessage: "Please enter all required fields." });
+      return res.status(400).json({ errorMessage: "Please enter all required fields." });
     }
 
     const existingUser = await User.findOne({ email: email });
@@ -178,10 +175,7 @@ loginUser = async (req, res) => {
         errorMessage: "Wrong email or password provided.",
       });
     }
-    const passwordCorrect = await bcrypt.compare(
-      password,
-      existingUser.passwordHash,
-    );
+    const passwordCorrect = await bcrypt.compare(password, existingUser.passwordHash);
     if (!passwordCorrect) {
       return res.status(401).json({
         errorMessage: "Wrong email or password provided.",
@@ -224,19 +218,9 @@ logoutUser = async (req, res) => {
 
 registerUser = async (req, res) => {
   try {
-    const { username, firstName, lastName, email, password, passwordVerify } =
-      req.body;
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !password ||
-      !passwordVerify ||
-      !username
-    ) {
-      return res
-        .status(400)
-        .json({ errorMessage: "Please enter all required fields." });
+    const { username, firstName, lastName, email, password, passwordVerify } = req.body;
+    if (!firstName || !lastName || !email || !password || !passwordVerify || !username) {
+      return res.status(400).json({ errorMessage: "Please enter all required fields." });
     }
     if (password.length < 8) {
       return res.status(400).json({

@@ -55,8 +55,7 @@ const SortType = {
   DISLIKES_DESC: "DISLIKES_DESC",
 };
 
-const cloneSongs = (songs) =>
-  Array.isArray(songs) ? songs.map((song) => ({ ...song })) : [];
+const cloneSongs = (songs) => (Array.isArray(songs) ? songs.map((song) => ({ ...song })) : []);
 
 const normalizeSongIndex = (songs, index) => {
   if (!Array.isArray(songs) || songs.length === 0) {
@@ -156,8 +155,7 @@ function GlobalStoreContextProvider(props) {
       };
 
       const shouldUpdateCurrent =
-        prevStore.currentList &&
-        prevStore.currentList._id === updatedPlaylist._id;
+        prevStore.currentList && prevStore.currentList._id === updatedPlaylist._id;
 
       return {
         ...prevStore,
@@ -234,9 +232,7 @@ function GlobalStoreContextProvider(props) {
           ...store,
           currentModal: CurrentModal.NONE,
           idNamePairs: payload.idNamePairs,
-          allIdNamePairs: payload.allIdNamePairs
-            ? payload.allIdNamePairs
-            : store.allIdNamePairs,
+          allIdNamePairs: payload.allIdNamePairs ? payload.allIdNamePairs : store.allIdNamePairs,
           currentList: null,
           currentSongIndex: -1,
           currentSong: null,
@@ -246,13 +242,9 @@ function GlobalStoreContextProvider(props) {
           listMarkedForDeletion: null,
           errorMessage: null,
           editingList: store.editingList,
-          sortType:
-            payload.sortType !== undefined ? payload.sortType : store.sortType,
+          sortType: payload.sortType !== undefined ? payload.sortType : store.sortType,
           sortLoc: store.sortLoc,
-          searchTerm:
-            payload.searchTerm !== undefined
-              ? payload.searchTerm
-              : store.searchTerm,
+          searchTerm: payload.searchTerm !== undefined ? payload.searchTerm : store.searchTerm,
         });
       }
       // STOP EDITING THE CURRENT LIST
@@ -271,8 +263,7 @@ function GlobalStoreContextProvider(props) {
           listMarkedForDeletion: null,
           errorMessage: null,
           editingList: store.editingList,
-          sortType:
-            payload.sortType !== undefined ? payload.sortType : store.sortType,
+          sortType: payload.sortType !== undefined ? payload.sortType : store.sortType,
           sortLoc: store.sortLoc,
           searchTerm: store.searchTerm,
           songsPlaying: {
@@ -298,8 +289,7 @@ function GlobalStoreContextProvider(props) {
           listMarkedForDeletion: null,
           errorMessage: null,
           editingList: store.editingList,
-          sortType:
-            payload.sortType !== undefined ? payload.sortType : store.sortType,
+          sortType: payload.sortType !== undefined ? payload.sortType : store.sortType,
           sortLoc: store.sortLoc,
           searchTerm: store.searchTerm,
         });
@@ -310,9 +300,7 @@ function GlobalStoreContextProvider(props) {
           ...store,
           currentModal: CurrentModal.NONE,
           idNamePairs: payload.idNamePairs,
-          allIdNamePairs: payload.allIdNamePairs
-            ? payload.allIdNamePairs
-            : store.allIdNamePairs,
+          allIdNamePairs: payload.allIdNamePairs ? payload.allIdNamePairs : store.allIdNamePairs,
           currentList: null,
           currentSongIndex: -1,
           currentSong: null,
@@ -322,22 +310,16 @@ function GlobalStoreContextProvider(props) {
           listMarkedForDeletion: null,
           errorMessage: null,
           editingList: store.editingList,
-          sortType:
-            payload.sortType !== undefined ? payload.sortType : store.sortType,
+          sortType: payload.sortType !== undefined ? payload.sortType : store.sortType,
           sortLoc: store.sortLoc,
-          searchTerm:
-            payload.searchTerm !== undefined
-              ? payload.searchTerm
-              : store.searchTerm,
+          searchTerm: payload.searchTerm !== undefined ? payload.searchTerm : store.searchTerm,
         });
       }
       case GlobalStoreActionType.FILTER_ID_NAME_PAIRS: {
         return setStore({
           currentModal: store.currentModal,
           idNamePairs: payload.idNamePairs,
-          allIdNamePairs: payload.allIdNamePairs
-            ? payload.allIdNamePairs
-            : store.allIdNamePairs,
+          allIdNamePairs: payload.allIdNamePairs ? payload.allIdNamePairs : store.allIdNamePairs,
           currentList: store.currentList,
           currentSongIndex: store.currentSongIndex,
           currentSong: store.currentSong,
@@ -349,10 +331,7 @@ function GlobalStoreContextProvider(props) {
           editingList: store.editingList,
           sortType: store.sortType,
           sortLoc: store.sortLoc,
-          searchTerm:
-            payload.searchTerm !== undefined
-              ? payload.searchTerm
-              : store.searchTerm,
+          searchTerm: payload.searchTerm !== undefined ? payload.searchTerm : store.searchTerm,
           registeredListens: store.registeredListens,
         });
       }
@@ -401,10 +380,7 @@ function GlobalStoreContextProvider(props) {
       case GlobalStoreActionType.SET_CURRENT_LIST: {
         const sourceSongs = Array.isArray(payload?.songs) ? payload.songs : [];
         const songs = cloneSongs(sourceSongs);
-        const nextIndex = normalizeSongIndex(
-          sourceSongs,
-          store.currentSongIndex,
-        );
+        const nextIndex = normalizeSongIndex(sourceSongs, store.currentSongIndex);
         const nextSong = nextIndex > -1 ? sourceSongs[nextIndex] : null;
         const shouldKeepPlaying = nextIndex > -1 && store.isPlaying;
 
@@ -572,9 +548,7 @@ function GlobalStoreContextProvider(props) {
         case "person":
           return username.includes(normalizedTerm);
         case "groups":
-          return (
-            name.includes(normalizedTerm) || username.includes(normalizedTerm)
-          );
+          return name.includes(normalizedTerm) || username.includes(normalizedTerm);
         case "home":
         default:
           return name.includes(normalizedTerm);
@@ -615,22 +589,19 @@ function GlobalStoreContextProvider(props) {
         break;
       case SortType.LISTENS_DESC:
         sortablePairs.sort((a, b) => {
-          const difference =
-            getRatingValue(b, "listens") - getRatingValue(a, "listens");
+          const difference = getRatingValue(b, "listens") - getRatingValue(a, "listens");
           return difference !== 0 ? difference : compareNames(a, b);
         });
         break;
       case SortType.LIKES_DESC:
         sortablePairs.sort((a, b) => {
-          const difference =
-            getRatingValue(b, "likes") - getRatingValue(a, "likes");
+          const difference = getRatingValue(b, "likes") - getRatingValue(a, "likes");
           return difference !== 0 ? difference : compareNames(a, b);
         });
         break;
       case SortType.DISLIKES_DESC:
         sortablePairs.sort((a, b) => {
-          const difference =
-            getRatingValue(b, "dislikes") - getRatingValue(a, "dislikes");
+          const difference = getRatingValue(b, "dislikes") - getRatingValue(a, "dislikes");
           return difference !== 0 ? difference : compareNames(a, b);
         });
         break;
@@ -648,26 +619,13 @@ function GlobalStoreContextProvider(props) {
     return sortValues.includes(sortKey) ? sortKey : SortType.NAME_ASC;
   };
 
-  const applyPairsToStore = (
-    pairsArray,
-    location,
-    searchTermOverride,
-    sortTypeOverride,
-  ) => {
+  const applyPairsToStore = (pairsArray, location, searchTermOverride, sortTypeOverride) => {
     const targetLocation = location || store.sortLoc;
     const overrideTerm =
-      typeof searchTermOverride === "string"
-        ? searchTermOverride
-        : store.searchTerm;
-    const effectiveSortType = normalizeSortType(
-      sortTypeOverride || store.sortType,
-    );
+      typeof searchTermOverride === "string" ? searchTermOverride : store.searchTerm;
+    const effectiveSortType = normalizeSortType(sortTypeOverride || store.sortType);
     const sortedPairs = sortPairsByType(pairsArray, effectiveSortType);
-    const filteredPairs = filterPairsBySearch(
-      sortedPairs,
-      overrideTerm,
-      targetLocation,
-    );
+    const filteredPairs = filterPairsBySearch(sortedPairs, overrideTerm, targetLocation);
 
     storeReducer({
       type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
@@ -694,12 +652,7 @@ function GlobalStoreContextProvider(props) {
         if (response.data.success) {
           store.sortLoc = "home";
           store.sortType = effectiveSort;
-          applyPairsToStore(
-            response.data.idNamePairs,
-            "home",
-            searchTermOverride,
-            effectiveSort,
-          );
+          applyPairsToStore(response.data.idNamePairs, "home", searchTermOverride, effectiveSort);
         } else {
           console.log("API FAILED TO GET THE HOME LISTS");
         }
@@ -720,12 +673,7 @@ function GlobalStoreContextProvider(props) {
         if (response.data.success) {
           store.sortLoc = "groups";
           store.sortType = effectiveSort;
-          applyPairsToStore(
-            response.data.idNamePairs,
-            "groups",
-            searchTermOverride,
-            effectiveSort,
-          );
+          applyPairsToStore(response.data.idNamePairs, "groups", searchTermOverride, effectiveSort);
         } else {
           console.log("API FAILED TO GET COMMUNITY LISTS");
         }
@@ -738,8 +686,7 @@ function GlobalStoreContextProvider(props) {
   };
 
   store.loadUserLists = function (username, sortOverride) {
-    const overrideTerm =
-      typeof username === "string" ? username : store.searchTerm;
+    const overrideTerm = typeof username === "string" ? username : store.searchTerm;
     const normalizedUser = overrideTerm ? overrideTerm.trim() : "";
 
     async function asyncLoadUserLists() {
@@ -756,14 +703,8 @@ function GlobalStoreContextProvider(props) {
         if (response.data.success) {
           store.sortLoc = "person";
           store.sortType = effectiveSort;
-          const effectiveTerm =
-            typeof overrideTerm === "string" ? overrideTerm : "";
-          applyPairsToStore(
-            response.data.idNamePairs,
-            "person",
-            effectiveTerm,
-            effectiveSort,
-          );
+          const effectiveTerm = typeof overrideTerm === "string" ? overrideTerm : "";
+          applyPairsToStore(response.data.idNamePairs, "person", effectiveTerm, effectiveSort);
         } else {
           console.log("API FAILED TO GET USER LISTS");
         }
@@ -776,9 +717,7 @@ function GlobalStoreContextProvider(props) {
   };
 
   const playSongAtIndex = (index) => {
-    const songs = Array.isArray(store.currentList?.songs)
-      ? store.currentList.songs
-      : [];
+    const songs = Array.isArray(store.currentList?.songs) ? store.currentList.songs : [];
 
     if (songs.length === 0) {
       return;
@@ -793,24 +732,14 @@ function GlobalStoreContextProvider(props) {
     const videoId = song?.youTubeId ?? "";
     const hasVideo = videoId.length > 0;
 
-    if (
-      store.currentSongIndex === -1 &&
-      store.currentList &&
-      store.currentList._id
-    ) {
-      registerPlaylistListen(
-        store.currentList._id,
-        Boolean(store.currentList.ownedByCurrentUser),
-      );
+    if (store.currentSongIndex === -1 && store.currentList && store.currentList._id) {
+      registerPlaylistListen(store.currentList._id, Boolean(store.currentList.ownedByCurrentUser));
     }
 
     if (store.youtubePlayer) {
       if (hasVideo) {
         const activeVideoId = getPlayerVideoId(store.youtubePlayer);
-        if (
-          activeVideoId === videoId &&
-          store.currentSongIndex === normalizedIndex
-        ) {
+        if (activeVideoId === videoId && store.currentSongIndex === normalizedIndex) {
           safelyInvokePlayer(store.youtubePlayer, "playVideo");
         } else {
           safelyInvokePlayer(store.youtubePlayer, "loadVideoById", videoId);
@@ -862,9 +791,7 @@ function GlobalStoreContextProvider(props) {
   };
 
   store.playCurrentSong = function () {
-    const songs = Array.isArray(store.currentList?.songs)
-      ? store.currentList.songs
-      : [];
+    const songs = Array.isArray(store.currentList?.songs) ? store.currentList.songs : [];
     if (songs.length === 0) {
       return;
     }
@@ -889,9 +816,7 @@ function GlobalStoreContextProvider(props) {
   };
 
   store.playNextSong = function () {
-    const songs = Array.isArray(store.currentList?.songs)
-      ? store.currentList.songs
-      : [];
+    const songs = Array.isArray(store.currentList?.songs) ? store.currentList.songs : [];
     if (songs.length === 0) {
       return;
     }
@@ -906,9 +831,7 @@ function GlobalStoreContextProvider(props) {
   };
 
   store.playPreviousSong = function () {
-    const songs = Array.isArray(store.currentList?.songs)
-      ? store.currentList.songs
-      : [];
+    const songs = Array.isArray(store.currentList?.songs) ? store.currentList.songs : [];
     if (songs.length === 0) {
       return;
     }
@@ -918,8 +841,7 @@ function GlobalStoreContextProvider(props) {
       return;
     }
 
-    const previousIndex =
-      (store.currentSongIndex - 1 + songs.length) % songs.length;
+    const previousIndex = (store.currentSongIndex - 1 + songs.length) % songs.length;
     playSongAtIndex(previousIndex);
   };
 
@@ -949,7 +871,7 @@ function GlobalStoreContextProvider(props) {
                 const filteredPairs = filterPairsBySearch(
                   pairsArray,
                   store.searchTerm,
-                  store.sortLoc,
+                  store.sortLoc
                 );
                 storeReducer({
                   type: GlobalStoreActionType.CHANGE_LIST_NAME,
@@ -1068,10 +990,7 @@ function GlobalStoreContextProvider(props) {
     store.currentList.published = Date.now();
 
     async function asyncUpdateCurrentList() {
-      const response = await api.updatePlaylistById(
-        store.currentList._id,
-        store.currentList,
-      );
+      const response = await api.updatePlaylistById(store.currentList._id, store.currentList);
       if (response.data.success) {
         window.location.reload();
       }
@@ -1092,11 +1011,7 @@ function GlobalStoreContextProvider(props) {
       return;
     }
 
-    const filteredPairs = filterPairsBySearch(
-      store.allIdNamePairs,
-      updatedTerm,
-      store.sortLoc,
-    );
+    const filteredPairs = filterPairsBySearch(store.allIdNamePairs, updatedTerm, store.sortLoc);
 
     storeReducer({
       type: GlobalStoreActionType.FILTER_ID_NAME_PAIRS,
@@ -1218,15 +1133,10 @@ function GlobalStoreContextProvider(props) {
 
         const playlist = response.data.playlist;
         const userEmail =
-          auth && auth.user && typeof auth.user.email === "string"
-            ? auth.user.email
-            : null;
+          auth && auth.user && typeof auth.user.email === "string" ? auth.user.email : null;
         const ownsPlaylist =
           Boolean(playlist?.ownedByCurrentUser) ||
-          (!isGuestUser() &&
-            userEmail &&
-            playlist &&
-            playlist.ownerEmail === userEmail);
+          (!isGuestUser() && userEmail && playlist && playlist.ownerEmail === userEmail);
 
         if (!ownsPlaylist) {
           storeReducer({
@@ -1236,10 +1146,7 @@ function GlobalStoreContextProvider(props) {
           return;
         }
 
-        const updateResponse = await api.updatePlaylistById(
-          playlist._id,
-          playlist,
-        );
+        const updateResponse = await api.updatePlaylistById(playlist._id, playlist);
 
         if (updateResponse.data.success) {
           storeReducer({
@@ -1497,12 +1404,7 @@ function GlobalStoreContextProvider(props) {
   };
   store.addNewSong = () => {
     let playlistSize = store.getPlaylistSize();
-    store.addCreateSongTransaction(
-      playlistSize,
-      "Untitled",
-      "?",
-      "dQw4w9WgXcQ",
-    );
+    store.addCreateSongTransaction(playlistSize, "Untitled", "?", "dQw4w9WgXcQ");
   };
   // THIS FUNCDTION ADDS A CreateSong_Transaction TO THE TRANSACTION STACK
   store.addCreateSongTransaction = (index, title, artist, youTubeId) => {
@@ -1533,20 +1435,12 @@ function GlobalStoreContextProvider(props) {
       artist: song.artist,
       youTubeId: song.youTubeId,
     };
-    let transaction = new UpdateSong_Transaction(
-      this,
-      index,
-      oldSongData,
-      newSongData,
-    );
+    let transaction = new UpdateSong_Transaction(this, index, oldSongData, newSongData);
     tps.addTransaction(transaction);
   };
   store.updateCurrentList = function () {
     async function asyncUpdateCurrentList() {
-      const response = await api.updatePlaylistById(
-        store.currentList._id,
-        store.currentList,
-      );
+      const response = await api.updatePlaylistById(store.currentList._id, store.currentList);
       if (response.data.success) {
         storeReducer({
           type: GlobalStoreActionType.SET_CURRENT_LIST,
@@ -1557,8 +1451,7 @@ function GlobalStoreContextProvider(props) {
     asyncUpdateCurrentList();
   };
   store.setSortLoc = function (location) {
-    const targetLocation =
-      isGuestUser() && location !== "groups" ? "groups" : location;
+    const targetLocation = isGuestUser() && location !== "groups" ? "groups" : location;
 
     store.sortLoc = targetLocation;
     history.push("/");
@@ -1580,12 +1473,7 @@ function GlobalStoreContextProvider(props) {
         store.loadUserLists(store.searchTerm, nextSortKey);
         break;
       default:
-        applyPairsToStore(
-          store.allIdNamePairs,
-          store.sortLoc,
-          store.searchTerm,
-          nextSortKey,
-        );
+        applyPairsToStore(store.allIdNamePairs, store.sortLoc, store.searchTerm, nextSortKey);
         break;
     }
 

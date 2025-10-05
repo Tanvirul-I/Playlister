@@ -36,11 +36,7 @@ export default function LoginScreen() {
     try {
       const rememberMeSelected = formData.get("remember") === "remember";
 
-      await auth.loginUser(
-        formData.get("email"),
-        formData.get("password"),
-        rememberMeSelected,
-      );
+      await auth.loginUser(formData.get("email"), formData.get("password"), rememberMeSelected);
     } catch (e) {
       const message = e?.data?.errorMessage || "Failed to sign in.";
       store.showErrorModal(message);
@@ -113,12 +109,7 @@ export default function LoginScreen() {
             >
               Sign in to continue curating and sharing your playlists.
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ width: "100%" }}
-            >
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ width: "100%" }}>
               <TextField
                 margin="normal"
                 required

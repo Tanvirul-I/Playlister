@@ -55,11 +55,7 @@ export default function MUIErrorModal() {
     <Modal open={errorMessage !== null} style={{ zIndex: 1250 }}>
       <Box sx={modalSurfaceSx}>
         <Stack spacing={2.5}>
-          <Typography
-            component="h2"
-            variant="h5"
-            sx={{ fontWeight: 600, letterSpacing: "0.02em" }}
-          >
+          <Typography component="h2" variant="h5" sx={{ fontWeight: 600, letterSpacing: "0.02em" }}>
             Something went wrong
           </Typography>
           <Alert

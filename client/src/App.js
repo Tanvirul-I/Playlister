@@ -3,12 +3,7 @@ import React, { useContext } from "react";
 import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
 import AuthContext, { AuthContextProvider } from "./auth";
 import { GlobalStoreContextProvider } from "./store";
-import {
-  AppBanner,
-  HomeWrapper,
-  LoginScreen,
-  RegisterScreen,
-} from "./components";
+import { AppBanner, HomeWrapper, LoginScreen, RegisterScreen } from "./components";
 /*
   This is our application's top-level component.
   This is the entry-point for our application. Notice that we

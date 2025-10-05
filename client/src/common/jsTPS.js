@@ -136,11 +136,7 @@ export default class jsTPS {
       this.mostRecentTransaction < 0 ||
       this.mostRecentTransaction < this.transactions.length - 1
     ) {
-      for (
-        let i = this.transactions.length - 1;
-        i > this.mostRecentTransaction;
-        i--
-      ) {
+      for (let i = this.transactions.length - 1; i > this.mostRecentTransaction; i--) {
         this.transactions.splice(i, 1);
       }
       this.numTransactions = this.mostRecentTransaction + 2;

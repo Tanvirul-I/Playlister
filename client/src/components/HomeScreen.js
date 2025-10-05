@@ -47,20 +47,11 @@ const HomeScreen = () => {
   const listItems = Array.isArray(store.idNamePairs) ? store.idNamePairs : [];
 
   let modalJSX = null;
-  if (
-    typeof store.isEditSongModalOpen === "function" &&
-    store.isEditSongModalOpen()
-  ) {
+  if (typeof store.isEditSongModalOpen === "function" && store.isEditSongModalOpen()) {
     modalJSX = <MUIEditSongModal />;
-  } else if (
-    typeof store.isRemoveSongModalOpen === "function" &&
-    store.isRemoveSongModalOpen()
-  ) {
+  } else if (typeof store.isRemoveSongModalOpen === "function" && store.isRemoveSongModalOpen()) {
     modalJSX = <MUIRemoveSongModal />;
-  } else if (
-    typeof store.isDeleteListModalOpen === "function" &&
-    store.isDeleteListModalOpen()
-  ) {
+  } else if (typeof store.isDeleteListModalOpen === "function" && store.isDeleteListModalOpen()) {
     modalJSX = <MUIDeleteModal />;
   }
 

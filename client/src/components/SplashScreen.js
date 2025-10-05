@@ -13,13 +13,11 @@ const features = [
   },
   {
     title: "Community Feedback",
-    description:
-      "Like, dislike, and discuss playlists to discover hidden gems.",
+    description: "Like, dislike, and discuss playlists to discover hidden gems.",
   },
   {
     title: "Integrated Player",
-    description:
-      "Watch the YouTube video for every track without leaving the app.",
+    description: "Watch the YouTube video for every track without leaving the app.",
   },
 ];
 
@@ -40,8 +38,8 @@ export default function SplashScreen() {
                 Build Soundtracks Together
               </Typography>
               <Typography variant="h6" className="splash-subtitle">
-                Design playlists, collaborate with your community, and enjoy
-                every beat in one modern music hub.
+                Design playlists, collaborate with your community, and enjoy every beat in one
+                modern music hub.
               </Typography>
             </div>
             <Stack direction="row" spacing={2} className="splash-actions">
@@ -80,10 +78,7 @@ export default function SplashScreen() {
                 <Typography variant="h6" className="splash-feature-title">
                   {feature.title}
                 </Typography>
-                <Typography
-                  variant="body1"
-                  className="splash-feature-description"
-                >
+                <Typography variant="body1" className="splash-feature-description">
                   {feature.description}
                 </Typography>
               </div>

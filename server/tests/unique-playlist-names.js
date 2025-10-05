@@ -15,15 +15,14 @@ class PlaylistStub {
 
   static async exists({ name, ownerEmail }) {
     return playlists.some(
-      (playlist) =>
-        playlist.name === name && playlist.ownerEmail === ownerEmail,
+      (playlist) => playlist.name === name && playlist.ownerEmail === ownerEmail
     );
   }
 
   static async findOne(query, callback) {
     const keys = Object.keys(query || {});
     const playlist = playlists.find((candidate) =>
-      keys.every((key) => candidate[key] === query[key]),
+      keys.every((key) => candidate[key] === query[key])
     );
 
     if (typeof callback === "function") {

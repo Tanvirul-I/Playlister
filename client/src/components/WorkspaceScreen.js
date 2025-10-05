@@ -28,10 +28,7 @@ function WorkspaceScreen() {
   return (
     <Box>
       {modalJSX}
-      <List
-        id="playlist-cards"
-        sx={{ width: "100%", bgcolor: "background.paper" }}
-      >
+      <List id="playlist-cards" sx={{ width: "100%", bgcolor: "background.paper" }}>
         {store.currentList.songs.map((song, index) => (
           <SongCard
             id={"playlist-song-" + index}

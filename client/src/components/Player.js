@@ -17,15 +17,11 @@ export default function Player() {
   const playingSongs = store.songsPlaying ? store.songsPlaying.songs : [];
   const currentIndex = store.songsPlaying ? store.songsPlaying.index : -1;
   const currentSong =
-    Array.isArray(playingSongs) &&
-    currentIndex >= 0 &&
-    currentIndex < playingSongs.length
+    Array.isArray(playingSongs) && currentIndex >= 0 && currentIndex < playingSongs.length
       ? playingSongs[currentIndex]
       : null;
 
-  const activePlaylist = hasPlaylist
-    ? store.currentList.name
-    : "No Playlist Playing";
+  const activePlaylist = hasPlaylist ? store.currentList.name : "No Playlist Playing";
   const songPosition = currentSong ? currentIndex + 1 : "N/A";
   const songTitle = currentSong ? currentSong.title : "No Song Playing";
   const songAuthor = currentSong ? currentSong.artist : "N/A";

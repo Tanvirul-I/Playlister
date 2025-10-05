@@ -3,21 +3,8 @@ import { GlobalStoreContext } from "../store";
 import AuthContext from "../auth";
 import SongCard from "./SongCard.js";
 
-import {
-  Box,
-  ListItem,
-  TextField,
-  Typography,
-  List,
-  Button,
-  IconButton,
-} from "@mui/material";
-import {
-  ExpandMore,
-  ExpandLess,
-  ThumbUp,
-  ThumbDown,
-} from "@mui/icons-material";
+import { Box, ListItem, TextField, Typography, List, Button, IconButton } from "@mui/material";
+import { ExpandMore, ExpandLess, ThumbUp, ThumbDown } from "@mui/icons-material";
 
 /*
     This is a card in our list of playlists. It lets select
@@ -35,11 +22,8 @@ function ListCard(props) {
 
   const isGuest = !!(auth && auth.user && auth.user.isGuest);
   const isPublished = idNamePair.published !== -1;
-  const isCurrentList = !!(
-    store.currentList && store.currentList._id === idNamePair._id
-  );
-  const songs =
-    isCurrentList && store.currentList ? store.currentList.songs : [];
+  const isCurrentList = !!(store.currentList && store.currentList._id === idNamePair._id);
+  const songs = isCurrentList && store.currentList ? store.currentList.songs : [];
   const listensCount = idNamePair?.ratings?.listens ?? 0;
   const likesCount = idNamePair?.ratings?.likes ?? 0;
   const dislikesCount = idNamePair?.ratings?.dislikes ?? 0;
@@ -47,11 +31,7 @@ function ListCard(props) {
   const dislikedByUser = Boolean(idNamePair?.viewerHasDisliked);
 
   const getRatingButtonSx = (isActive, activeColor, disabled) => ({
-    color: disabled
-      ? "rgba(255, 255, 255, 0.32)"
-      : isActive
-        ? activeColor
-        : "#f5f5f5",
+    color: disabled ? "rgba(255, 255, 255, 0.32)" : isActive ? activeColor : "#f5f5f5",
     backgroundColor: disabled
       ? "rgba(255, 255, 255, 0.04)"
       : isActive
@@ -67,11 +47,7 @@ function ListCard(props) {
     transition:
       "transform 0.2s var(--bounceEasing), color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease",
     ":hover": {
-      color: disabled
-        ? "rgba(255, 255, 255, 0.32)"
-        : isActive
-          ? activeColor
-          : "#ffffff",
+      color: disabled ? "rgba(255, 255, 255, 0.32)" : isActive ? activeColor : "#ffffff",
       backgroundColor: disabled
         ? "rgba(255, 255, 255, 0.04)"
         : isActive
@@ -104,8 +80,7 @@ function ListCard(props) {
     alignSelf: "center",
     boxShadow: "0 18px 34px rgba(0,0,0,0.5)",
     border: "1px solid rgba(255, 255, 255, 0.08)",
-    transition:
-      "background 0.2s ease, transform 0.2s ease, border-color 0.2s ease",
+    transition: "background 0.2s ease, transform 0.2s ease, border-color 0.2s ease",
     ":hover": {
       color: "#ffffff",
       background: "linear-gradient(135deg, #292929, #161616)",
@@ -432,12 +407,10 @@ function ListCard(props) {
     p: 2,
     width: "100%",
     borderRadius: "18px",
-    background:
-      "linear-gradient(160deg, rgba(18, 18, 18, 0.95), rgba(6, 6, 6, 0.92))",
+    background: "linear-gradient(160deg, rgba(18, 18, 18, 0.95), rgba(6, 6, 6, 0.92))",
     border: "1px solid rgba(255, 255, 255, 0.06)",
     boxShadow: "0 28px 44px rgba(0, 0, 0, 0.45)",
-    transition:
-      "transform 0.2s var(--bounceEasing), box-shadow 0.2s ease, border-color 0.2s ease",
+    transition: "transform 0.2s var(--bounceEasing), box-shadow 0.2s ease, border-color 0.2s ease",
     color: "#f5f5f5",
     "&:hover": {
       transform: "translateY(-2px)",

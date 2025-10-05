@@ -3,10 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
-const {
-  createRateLimiter,
-  userAwareKeyGenerator,
-} = require("./middleware/rate-limiter");
+const { createRateLimiter, userAwareKeyGenerator } = require("./middleware/rate-limiter");
 
 // CREATE OUR SERVER
 dotenv.config();
@@ -26,7 +23,7 @@ app.use(
   cors({
     origin: ["http://localhost:3000"],
     credentials: true,
-  }),
+  })
 );
 app.use(express.json());
 app.use(cookieParser());
@@ -34,16 +31,14 @@ app.use(cookieParser());
 const globalApiLimiter = createRateLimiter({
   windowMs: 60 * 1000,
   max: 240,
-  message:
-    "Too many requests from this client. Please wait a moment and try again.",
+  message: "Too many requests from this client. Please wait a moment and try again.",
 });
 
 const authLimiter = createRateLimiter({
   windowMs: 60 * 1000,
   max: 20,
   keyGenerator: userAwareKeyGenerator,
-  message:
-    "Too many authentication attempts detected. Please slow down before trying again.",
+  message: "Too many authentication attempts detected. Please slow down before trying again.",
 });
 
 // SETUP OUR OWN ROUTERS AS MIDDLEWARE

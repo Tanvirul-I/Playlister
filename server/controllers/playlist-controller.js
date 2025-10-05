@@ -4,42 +4,26 @@ const User = require("../models/user-model");
 
 const formatPlaylistForClient = (
   playlist,
-  {
-    viewerEmail = null,
-    includeOwnerDetails = false,
-    includeReactionAudience = false,
-  } = {},
+  { viewerEmail = null, includeOwnerDetails = false, includeReactionAudience = false } = {}
 ) => {
   if (!playlist) {
     return null;
   }
 
   const rawPlaylist =
-    typeof playlist.toObject === "function"
-      ? playlist.toObject()
-      : { ...playlist };
+    typeof playlist.toObject === "function" ? playlist.toObject() : { ...playlist };
 
-  const likedBy = Array.isArray(rawPlaylist.likedBy)
-    ? [...rawPlaylist.likedBy]
-    : [];
-  const dislikedBy = Array.isArray(rawPlaylist.dislikedBy)
-    ? [...rawPlaylist.dislikedBy]
-    : [];
+  const likedBy = Array.isArray(rawPlaylist.likedBy) ? [...rawPlaylist.likedBy] : [];
+  const dislikedBy = Array.isArray(rawPlaylist.dislikedBy) ? [...rawPlaylist.dislikedBy] : [];
   const listens =
-    typeof rawPlaylist?.ratings?.listens === "number"
-      ? rawPlaylist.ratings.listens
-      : 0;
+    typeof rawPlaylist?.ratings?.listens === "number" ? rawPlaylist.ratings.listens : 0;
 
   const normalizedViewerEmail =
-    typeof viewerEmail === "string" && viewerEmail.length > 0
-      ? viewerEmail
-      : null;
+    typeof viewerEmail === "string" && viewerEmail.length > 0 ? viewerEmail : null;
   const ownedByCurrentUser = !!(
     normalizedViewerEmail && rawPlaylist.ownerEmail === normalizedViewerEmail
   );
-  const viewerHasLiked = normalizedViewerEmail
-    ? likedBy.includes(normalizedViewerEmail)
-    : false;
+  const viewerHasLiked = normalizedViewerEmail ? likedBy.includes(normalizedViewerEmail) : false;
   const viewerHasDisliked = normalizedViewerEmail
     ? dislikedBy.includes(normalizedViewerEmail)
     : false;
@@ -102,8 +86,7 @@ const comparePlaylistNames = (a, b) => {
 };
 
 const getPublishedValue = (playlist) => {
-  const value =
-    typeof playlist?.published === "number" ? playlist.published : -1;
+  const value = typeof playlist?.published === "number" ? playlist.published : -1;
   return value >= 0 ? value : -Infinity;
 };
 
@@ -129,22 +112,19 @@ const sortPlaylistsByType = (playlists, sortKey) => {
       break;
     case SortType.LISTENS_DESC:
       sortableLists.sort((a, b) => {
-        const difference =
-          getRatingValue(b, "listens") - getRatingValue(a, "listens");
+        const difference = getRatingValue(b, "listens") - getRatingValue(a, "listens");
         return difference !== 0 ? difference : comparePlaylistNames(a, b);
       });
       break;
     case SortType.LIKES_DESC:
       sortableLists.sort((a, b) => {
-        const difference =
-          getRatingValue(b, "likes") - getRatingValue(a, "likes");
+        const difference = getRatingValue(b, "likes") - getRatingValue(a, "likes");
         return difference !== 0 ? difference : comparePlaylistNames(a, b);
       });
       break;
     case SortType.DISLIKES_DESC:
       sortableLists.sort((a, b) => {
-        const difference =
-          getRatingValue(b, "dislikes") - getRatingValue(a, "dislikes");
+        const difference = getRatingValue(b, "dislikes") - getRatingValue(a, "dislikes");
         return difference !== 0 ? difference : comparePlaylistNames(a, b);
       });
       break;
@@ -270,8 +250,7 @@ createPlaylist = async (req, res) => {
     playlistData["ownerEmail"] = user.email;
     playlistData["username"] = user.username;
 
-    const baseName =
-      typeof playlistData.name === "string" ? playlistData.name : "";
+    const baseName = typeof playlistData.name === "string" ? playlistData.name : "";
     let candidateName = baseName;
     let suffix = 1;
 
@@ -289,9 +268,7 @@ createPlaylist = async (req, res) => {
 
     const playlist = new Playlist(playlistData);
     if (!playlist) {
-      return res
-        .status(400)
-        .json({ success: false, error: "Invalid playlist" });
+      return res.status(400).json({ success: false, error: "Invalid playlist" });
     }
 
     if (!Array.isArray(user.playlists)) {
@@ -367,9 +344,7 @@ deletePlaylist = async (req, res) => {
     await Playlist.deleteOne({ _id: playlist._id }).exec();
 
     if (Array.isArray(user.playlists)) {
-      user.playlists = user.playlists.filter(
-        (id) => id?.toString() !== playlist._id.toString(),
-      );
+      user.playlists = user.playlists.filter((id) => id?.toString() !== playlist._id.toString());
       if (typeof user.save === "function") {
         await user.save();
       }
@@ -389,16 +364,12 @@ deletePlaylist = async (req, res) => {
 getPlaylistById = async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res
-        .status(404)
-        .json({ success: false, error: "Playlist not found" });
+      return res.status(404).json({ success: false, error: "Playlist not found" });
     }
 
     const playlist = await Playlist.findById(req.params.id).exec();
     if (!playlist) {
-      return res
-        .status(404)
-        .json({ success: false, error: "Playlist not found" });
+      return res.status(404).json({ success: false, error: "Playlist not found" });
     }
 
     if (req.isGuest) {
@@ -476,9 +447,7 @@ getPlaylistPairs = async (req, res) => {
           return res.status(400).json({ success: false, error: err });
         }
         if (!playlists) {
-          return res
-            .status(404)
-            .json({ success: false, error: "Playlists not found" });
+          return res.status(404).json({ success: false, error: "Playlists not found" });
         } else {
           // PUT ALL THE LISTS INTO ID, NAME PAIRS
           const pairs = getSortedPairsResponse(playlists, requestedSort, {
@@ -505,9 +474,7 @@ getHomePlaylistPairs = async (req, res) => {
     }
 
     if (!mongoose.Types.ObjectId.isValid(req.userId)) {
-      return res
-        .status(400)
-        .json({ success: false, error: "Invalid user identifier" });
+      return res.status(400).json({ success: false, error: "Invalid user identifier" });
     }
 
     const user = await User.findOne({ _id: req.userId }).exec();
@@ -525,9 +492,7 @@ getHomePlaylistPairs = async (req, res) => {
     return res.status(200).json({ success: true, idNamePairs: pairs });
   } catch (error) {
     console.error(error);
-    return res
-      .status(500)
-      .json({ success: false, error: "Failed to load home playlists" });
+    return res.status(500).json({ success: false, error: "Failed to load home playlists" });
   }
 };
 
@@ -571,9 +536,7 @@ getUserPlaylistPairs = async (req, res) => {
     return res.status(200).json({ success: true, idNamePairs: pairs });
   } catch (error) {
     console.error(error);
-    return res
-      .status(500)
-      .json({ success: false, error: "Failed to load user playlists" });
+    return res.status(500).json({ success: false, error: "Failed to load user playlists" });
   }
 };
 getPlaylists = async (req, res) => {
@@ -599,7 +562,7 @@ getPlaylists = async (req, res) => {
           formatPlaylistForClient(playlist, {
             viewerEmail: user.email,
             includeOwnerDetails: true,
-          }),
+          })
         )
       : [];
 
@@ -672,9 +635,7 @@ updatePlaylist = async (req, res) => {
 
     const updatedPlaylist = body.playlist || {};
     const requestedName =
-      typeof updatedPlaylist.name === "string"
-        ? updatedPlaylist.name.trim()
-        : "";
+      typeof updatedPlaylist.name === "string" ? updatedPlaylist.name.trim() : "";
 
     if (!requestedName) {
       return res.status(400).json({
@@ -777,15 +738,11 @@ likePlaylist = async (req, res) => {
     const alreadyDisliked = playlist.dislikedBy.includes(user.email);
 
     if (alreadyLiked) {
-      playlist.likedBy = playlist.likedBy.filter(
-        (email) => email !== user.email,
-      );
+      playlist.likedBy = playlist.likedBy.filter((email) => email !== user.email);
     } else {
       playlist.likedBy.push(user.email);
       if (alreadyDisliked) {
-        playlist.dislikedBy = playlist.dislikedBy.filter(
-          (email) => email !== user.email,
-        );
+        playlist.dislikedBy = playlist.dislikedBy.filter((email) => email !== user.email);
       }
     }
 
@@ -866,15 +823,11 @@ dislikePlaylist = async (req, res) => {
     const alreadyDisliked = playlist.dislikedBy.includes(user.email);
 
     if (alreadyDisliked) {
-      playlist.dislikedBy = playlist.dislikedBy.filter(
-        (email) => email !== user.email,
-      );
+      playlist.dislikedBy = playlist.dislikedBy.filter((email) => email !== user.email);
     } else {
       playlist.dislikedBy.push(user.email);
       if (alreadyLiked) {
-        playlist.likedBy = playlist.likedBy.filter(
-          (email) => email !== user.email,
-        );
+        playlist.likedBy = playlist.likedBy.filter((email) => email !== user.email);
       }
     }
 
@@ -935,8 +888,7 @@ createPlaylistComment = async (req, res) => {
       });
     }
 
-    const isPublished =
-      typeof playlist.published === "number" && playlist.published >= 0;
+    const isPublished = typeof playlist.published === "number" && playlist.published >= 0;
     const isOwner = playlist.ownerEmail === user.email;
 
     if (!isPublished && !isOwner) {
@@ -979,8 +931,7 @@ getPlaylistComments = async (req, res) => {
       });
     }
 
-    const isPublished =
-      typeof playlist.published === "number" && playlist.published >= 0;
+    const isPublished = typeof playlist.published === "number" && playlist.published >= 0;
 
     if (!isPublished) {
       if (req.isGuest) {
@@ -1175,8 +1126,7 @@ incrementPlaylistListen = async (req, res) => {
     if (!isOwner && !isPublished) {
       return res.status(403).json({
         success: false,
-        errorMessage:
-          "You do not have permission to register listens for this playlist.",
+        errorMessage: "You do not have permission to register listens for this playlist.",
       });
     }
 
@@ -1199,9 +1149,7 @@ incrementPlaylistListen = async (req, res) => {
     }
 
     const currentListens =
-      typeof playlist.ratings.listens === "number"
-        ? playlist.ratings.listens
-        : 0;
+      typeof playlist.ratings.listens === "number" ? playlist.ratings.listens : 0;
 
     playlist.ratings.listens = currentListens + 1;
 

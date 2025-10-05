@@ -56,10 +56,7 @@ const cancelButtonSx = {
 export default function MUIRemoveSongModal() {
   const { store } = useContext(GlobalStoreContext);
   const modalOpen = store.isRemoveSongModalOpen();
-  const currentSong = useMemo(
-    () => store.currentSong || { title: "" },
-    [store.currentSong],
-  );
+  const currentSong = useMemo(() => store.currentSong || { title: "" }, [store.currentSong]);
 
   function handleConfirmRemoveSong() {
     store.addRemoveSongTransaction();
@@ -70,31 +67,16 @@ export default function MUIRemoveSongModal() {
   }
 
   return (
-    <Modal
-      open={modalOpen}
-      onClose={handleCancelRemoveSong}
-      style={{ zIndex: 1250 }}
-    >
+    <Modal open={modalOpen} onClose={handleCancelRemoveSong} style={{ zIndex: 1250 }}>
       <Box id="remove-song-modal" sx={modalSurfaceSx}>
-        <Typography
-          component="h2"
-          variant="h5"
-          sx={{ fontWeight: 600, letterSpacing: "0.02em" }}
-        >
+        <Typography component="h2" variant="h5" sx={{ fontWeight: 600, letterSpacing: "0.02em" }}>
           Remove {currentSong.title || "this song"}?
         </Typography>
-        <Typography
-          sx={{ color: "rgba(226, 232, 240, 0.75)", lineHeight: 1.6 }}
-        >
-          Are you sure you wish to permanently remove{" "}
-          {currentSong.title || "this song"} from the playlist?
+        <Typography sx={{ color: "rgba(226, 232, 240, 0.75)", lineHeight: 1.6 }}>
+          Are you sure you wish to permanently remove {currentSong.title || "this song"} from the
+          playlist?
         </Typography>
-        <Stack
-          direction="row"
-          spacing={2}
-          justifyContent="flex-end"
-          className="modal-south"
-        >
+        <Stack direction="row" spacing={2} justifyContent="flex-end" className="modal-south">
           <Button
             id="remove-song-confirm-button"
             className="modal-button"

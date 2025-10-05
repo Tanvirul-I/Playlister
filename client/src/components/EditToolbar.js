@@ -2,13 +2,7 @@ import { useContext } from "react";
 import { GlobalStoreContext } from "../store";
 import AuthContext from "../auth";
 
-import {
-  Toolbar as MuiToolbar,
-  Button,
-  Box,
-  AppBar,
-  IconButton,
-} from "@mui/material";
+import { Toolbar as MuiToolbar, Button, Box, AppBar, IconButton } from "@mui/material";
 import { Add, Redo, Undo, HighlightOff } from "@mui/icons-material";
 
 export default function EditToolbar() {
@@ -161,22 +155,14 @@ export default function EditToolbar() {
                   background: disableAddSong
                     ? "rgba(255, 255, 255, 0.08)"
                     : "linear-gradient(135deg, #f5f5f5, #dedede)",
-                  color: disableAddSong
-                    ? "rgba(255, 255, 255, 0.38)"
-                    : "#111111",
-                  boxShadow: disableAddSong
-                    ? "none"
-                    : "0 10px 20px rgba(0,0,0,0.25)",
+                  color: disableAddSong ? "rgba(255, 255, 255, 0.38)" : "#111111",
+                  boxShadow: disableAddSong ? "none" : "0 10px 20px rgba(0,0,0,0.25)",
                   ":hover": {
-                    bgcolor: disableAddSong
-                      ? "rgba(255, 255, 255, 0.08)"
-                      : undefined,
+                    bgcolor: disableAddSong ? "rgba(255, 255, 255, 0.08)" : undefined,
                     background: disableAddSong
                       ? "rgba(255, 255, 255, 0.08)"
                       : "linear-gradient(135deg, #ffffff, #e6e6e6)",
-                    boxShadow: disableAddSong
-                      ? "none"
-                      : "0 14px 26px rgba(0,0,0,0.35)",
+                    boxShadow: disableAddSong ? "none" : "0 14px 26px rgba(0,0,0,0.35)",
                   },
                 }}
               >
@@ -190,19 +176,13 @@ export default function EditToolbar() {
                     ? "rgba(255, 255, 255, 0.08)"
                     : "linear-gradient(135deg, #2c2c2c, #141414)",
                   color: disableUndo ? "rgba(255, 255, 255, 0.38)" : "#f4f4f4",
-                  boxShadow: disableUndo
-                    ? "none"
-                    : "0 10px 20px rgba(0,0,0,0.3)",
+                  boxShadow: disableUndo ? "none" : "0 10px 20px rgba(0,0,0,0.3)",
                   ":hover": {
-                    bgcolor: disableUndo
-                      ? "rgba(255, 255, 255, 0.08)"
-                      : undefined,
+                    bgcolor: disableUndo ? "rgba(255, 255, 255, 0.08)" : undefined,
                     background: disableUndo
                       ? "rgba(255, 255, 255, 0.08)"
                       : "linear-gradient(135deg, #333333, #1b1b1b)",
-                    boxShadow: disableUndo
-                      ? "none"
-                      : "0 14px 26px rgba(0,0,0,0.4)",
+                    boxShadow: disableUndo ? "none" : "0 14px 26px rgba(0,0,0,0.4)",
                   },
                 }}
               >
@@ -216,19 +196,13 @@ export default function EditToolbar() {
                     ? "rgba(255, 255, 255, 0.08)"
                     : "linear-gradient(135deg, #2c2c2c, #141414)",
                   color: disableRedo ? "rgba(255, 255, 255, 0.38)" : "#f4f4f4",
-                  boxShadow: disableRedo
-                    ? "none"
-                    : "0 10px 20px rgba(0,0,0,0.3)",
+                  boxShadow: disableRedo ? "none" : "0 10px 20px rgba(0,0,0,0.3)",
                   ":hover": {
-                    bgcolor: disableRedo
-                      ? "rgba(255, 255, 255, 0.08)"
-                      : undefined,
+                    bgcolor: disableRedo ? "rgba(255, 255, 255, 0.08)" : undefined,
                     background: disableRedo
                       ? "rgba(255, 255, 255, 0.08)"
                       : "linear-gradient(135deg, #333333, #1b1b1b)",
-                    boxShadow: disableRedo
-                      ? "none"
-                      : "0 14px 26px rgba(0,0,0,0.4)",
+                    boxShadow: disableRedo ? "none" : "0 14px 26px rgba(0,0,0,0.4)",
                   },
                 }}
               >
@@ -242,19 +216,13 @@ export default function EditToolbar() {
                     ? "rgba(255, 255, 255, 0.08)"
                     : "linear-gradient(135deg, #2c2c2c, #141414)",
                   color: disableClose ? "rgba(255, 255, 255, 0.38)" : "#f4f4f4",
-                  boxShadow: disableClose
-                    ? "none"
-                    : "0 10px 20px rgba(0,0,0,0.3)",
+                  boxShadow: disableClose ? "none" : "0 10px 20px rgba(0,0,0,0.3)",
                   ":hover": {
-                    bgcolor: disableClose
-                      ? "rgba(255, 255, 255, 0.08)"
-                      : undefined,
+                    bgcolor: disableClose ? "rgba(255, 255, 255, 0.08)" : undefined,
                     background: disableClose
                       ? "rgba(255, 255, 255, 0.08)"
                       : "linear-gradient(135deg, #333333, #1b1b1b)",
-                    boxShadow: disableClose
-                      ? "none"
-                      : "0 14px 26px rgba(0,0,0,0.4)",
+                    boxShadow: disableClose ? "none" : "0 14px 26px rgba(0,0,0,0.4)",
                   },
                 }}
               >

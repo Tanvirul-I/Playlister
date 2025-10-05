@@ -37,7 +37,7 @@ export default function RegisterScreen() {
         formData.get("lastName"),
         formData.get("email"),
         formData.get("password"),
-        formData.get("passwordVerify"),
+        formData.get("passwordVerify")
       );
     } catch (e) {
       const message = e?.data?.errorMessage || "Failed to sign up.";
@@ -112,12 +112,8 @@ export default function RegisterScreen() {
               >
                 Create Your Account
               </Typography>
-              <Typography
-                variant="body1"
-                sx={{ color: "rgba(229, 229, 229, 0.76)" }}
-              >
-                Build playlists, collaborate with friends, and explore new
-                sounds every day.
+              <Typography variant="body1" sx={{ color: "rgba(229, 229, 229, 0.76)" }}>
+                Build playlists, collaborate with friends, and explore new sounds every day.
               </Typography>
             </Grid>
             <Grid item xs={12} md={7}>

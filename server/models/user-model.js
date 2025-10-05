@@ -12,7 +12,7 @@ const UserSchema = new Schema(
     playlists: [{ type: ObjectId, ref: "Playlist" }],
     isGuest: { type: Boolean, default: false },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("User", UserSchema);

@@ -86,20 +86,10 @@ export default function AppBanner() {
         </MenuItem>,
       ]
     : [
-        <MenuItem
-          key="login"
-          component={Link}
-          to="/login/"
-          onClick={handleAccountMenuClose}
-        >
+        <MenuItem key="login" component={Link} to="/login/" onClick={handleAccountMenuClose}>
           Login
         </MenuItem>,
-        <MenuItem
-          key="register"
-          component={Link}
-          to="/register/"
-          onClick={handleAccountMenuClose}
-        >
+        <MenuItem key="register" component={Link} to="/register/" onClick={handleAccountMenuClose}>
           Create New Account
         </MenuItem>,
       ];
@@ -152,11 +142,7 @@ export default function AppBanner() {
     </Menu>
   );
 
-  const accountIcon = auth.loggedIn ? (
-    auth.getUserInitials()
-  ) : (
-    <AccountCircle />
-  );
+  const accountIcon = auth.loggedIn ? auth.getUserInitials() : <AccountCircle />;
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -180,11 +166,7 @@ export default function AppBanner() {
             flexWrap: "wrap",
           }}
         >
-          <Box
-            component={Link}
-            to="/"
-            sx={{ display: "inline-flex", alignItems: "center" }}
-          >
+          <Box component={Link} to="/" sx={{ display: "inline-flex", alignItems: "center" }}>
             <img style={imageStyle} src={logo} alt="Playlister logo" />
           </Box>
           {showWorkspaceControls && (
@@ -197,29 +179,17 @@ export default function AppBanner() {
                 flex: 1,
               }}
             >
-              <Stack
-                direction="row"
-                spacing={1}
-                sx={{ flexWrap: "wrap", color: "#f4f4f4" }}
-              >
+              <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", color: "#f4f4f4" }}>
                 <IconButton
                   onClick={() => handleViewChange("home")}
                   disabled={isGuestUser}
                   sx={{
-                    color:
-                      activeSelection === "home"
-                        ? "#ffffff"
-                        : "rgba(244, 244, 244, 0.75)",
+                    color: activeSelection === "home" ? "#ffffff" : "rgba(244, 244, 244, 0.75)",
                     backgroundColor:
-                      activeSelection === "home"
-                        ? "rgba(255, 255, 255, 0.12)"
-                        : "transparent",
-                    transition:
-                      "background-color 0.2s ease, color 0.2s ease, transform 0.2s ease",
+                      activeSelection === "home" ? "rgba(255, 255, 255, 0.12)" : "transparent",
+                    transition: "background-color 0.2s ease, color 0.2s ease, transform 0.2s ease",
                     boxShadow:
-                      activeSelection === "home"
-                        ? "0 12px 20px rgba(0, 0, 0, 0.35)"
-                        : "none",
+                      activeSelection === "home" ? "0 12px 20px rgba(0, 0, 0, 0.35)" : "none",
                     ":hover": {
                       color: "#ffffff",
                       backgroundColor: "rgba(255, 255, 255, 0.12)",
@@ -237,20 +207,12 @@ export default function AppBanner() {
                 <IconButton
                   onClick={() => handleViewChange("groups")}
                   sx={{
-                    color:
-                      activeSelection === "groups"
-                        ? "#ffffff"
-                        : "rgba(244, 244, 244, 0.75)",
+                    color: activeSelection === "groups" ? "#ffffff" : "rgba(244, 244, 244, 0.75)",
                     backgroundColor:
-                      activeSelection === "groups"
-                        ? "rgba(255, 255, 255, 0.12)"
-                        : "transparent",
-                    transition:
-                      "background-color 0.2s ease, color 0.2s ease, transform 0.2s ease",
+                      activeSelection === "groups" ? "rgba(255, 255, 255, 0.12)" : "transparent",
+                    transition: "background-color 0.2s ease, color 0.2s ease, transform 0.2s ease",
                     boxShadow:
-                      activeSelection === "groups"
-                        ? "0 12px 20px rgba(0, 0, 0, 0.35)"
-                        : "none",
+                      activeSelection === "groups" ? "0 12px 20px rgba(0, 0, 0, 0.35)" : "none",
                     ":hover": {
                       color: "#ffffff",
                       backgroundColor: "rgba(255, 255, 255, 0.12)",
@@ -264,20 +226,12 @@ export default function AppBanner() {
                   onClick={() => handleViewChange("person")}
                   disabled={isGuestUser}
                   sx={{
-                    color:
-                      activeSelection === "person"
-                        ? "#ffffff"
-                        : "rgba(244, 244, 244, 0.75)",
+                    color: activeSelection === "person" ? "#ffffff" : "rgba(244, 244, 244, 0.75)",
                     backgroundColor:
-                      activeSelection === "person"
-                        ? "rgba(255, 255, 255, 0.12)"
-                        : "transparent",
-                    transition:
-                      "background-color 0.2s ease, color 0.2s ease, transform 0.2s ease",
+                      activeSelection === "person" ? "rgba(255, 255, 255, 0.12)" : "transparent",
+                    transition: "background-color 0.2s ease, color 0.2s ease, transform 0.2s ease",
                     boxShadow:
-                      activeSelection === "person"
-                        ? "0 12px 20px rgba(0, 0, 0, 0.35)"
-                        : "none",
+                      activeSelection === "person" ? "0 12px 20px rgba(0, 0, 0, 0.35)" : "none",
                     ":hover": {
                       color: "#ffffff",
                       backgroundColor: "rgba(255, 255, 255, 0.12)",

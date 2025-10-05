@@ -54,17 +54,13 @@ const buildSortParams = (sortType) => {
   };
 };
 
-export const getPlaylistPairs = (sortType) =>
-  api.get(`/playlistpairs/`, buildSortParams(sortType));
+export const getPlaylistPairs = (sortType) => api.get(`/playlistpairs/`, buildSortParams(sortType));
 export const getHomePlaylists = (sortType) =>
   api.get(`/playlistpairs/home`, buildSortParams(sortType));
 export const getCommunityPlaylists = (sortType) =>
   api.get(`/playlistpairs/community`, buildSortParams(sortType));
 export const getUserPlaylists = (username, sortType) =>
-  api.get(
-    `/playlistpairs/user/${encodeURIComponent(username)}`,
-    buildSortParams(sortType),
-  );
+  api.get(`/playlistpairs/user/${encodeURIComponent(username)}`, buildSortParams(sortType));
 export const updatePlaylistById = (id, playlist) => {
   return api.put(`/playlist/${id}`, {
     // SPECIFY THE PAYLOAD
@@ -72,16 +68,14 @@ export const updatePlaylistById = (id, playlist) => {
   });
 };
 export const getPlaylistComments = (id) => api.get(`/playlist/${id}/comments`);
-export const createPlaylistComment = (id, data) =>
-  api.post(`/playlist/${id}/comments`, data);
+export const createPlaylistComment = (id, data) => api.post(`/playlist/${id}/comments`, data);
 export const updatePlaylistComment = (id, commentId, data) =>
   api.put(`/playlist/${id}/comments/${commentId}`, data);
 export const deletePlaylistComment = (id, commentId) =>
   api.delete(`/playlist/${id}/comments/${commentId}`);
 export const likePlaylist = (id) => api.post(`/playlist/${id}/like`);
 export const dislikePlaylist = (id) => api.post(`/playlist/${id}/dislike`);
-export const incrementPlaylistListen = (id) =>
-  api.post(`/playlist/${id}/listen`);
+export const incrementPlaylistListen = (id) => api.post(`/playlist/${id}/listen`);
 
 const apis = {
   createPlaylist,

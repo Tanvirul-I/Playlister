@@ -76,18 +76,11 @@ export default function MUIDeleteModal() {
   return (
     <Modal open={store.listMarkedForDeletion !== null} style={{ zIndex: 1250 }}>
       <Box sx={modalSurfaceSx}>
-        <Typography
-          component="h2"
-          variant="h5"
-          sx={{ fontWeight: 600, letterSpacing: "0.02em" }}
-        >
+        <Typography component="h2" variant="h5" sx={{ fontWeight: 600, letterSpacing: "0.02em" }}>
           Delete the {name} playlist?
         </Typography>
-        <Typography
-          sx={{ color: "rgba(226, 232, 240, 0.75)", lineHeight: 1.6 }}
-        >
-          This action cannot be undone. Are you sure you want to remove this
-          playlist permanently?
+        <Typography sx={{ color: "rgba(226, 232, 240, 0.75)", lineHeight: 1.6 }}>
+          This action cannot be undone. Are you sure you want to remove this playlist permanently?
         </Typography>
         <Stack direction="row" spacing={2} justifyContent="flex-end">
           <Button

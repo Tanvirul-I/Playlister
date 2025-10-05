@@ -37,8 +37,7 @@ const userAwareKeyGenerator = (req) => {
 
 const createScopedKeyGenerator = (scopeBuilder) => (req) => {
   const baseKey = userAwareKeyGenerator(req);
-  const scopeValue =
-    typeof scopeBuilder === "function" ? scopeBuilder(req) : null;
+  const scopeValue = typeof scopeBuilder === "function" ? scopeBuilder(req) : null;
 
   if (scopeValue) {
     return `${scopeValue}:${baseKey}`;
@@ -76,9 +75,7 @@ const createRateLimiter = (options = {}) => {
     const windowStart = now - safeWindowMs;
 
     const timestamps = requestLog.get(key) || [];
-    const recentTimestamps = timestamps.filter(
-      (timestamp) => timestamp > windowStart,
-    );
+    const recentTimestamps = timestamps.filter((timestamp) => timestamp > windowStart);
     recentTimestamps.push(now);
     requestLog.set(key, recentTimestamps);
 

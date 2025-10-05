@@ -27,8 +27,7 @@ function authManager() {
         normalizedUserId = normalizedUserId.toString();
       }
 
-      const isValidUserId =
-        normalizedUserId && mongoose.Types.ObjectId.isValid(normalizedUserId);
+      const isValidUserId = normalizedUserId && mongoose.Types.ObjectId.isValid(normalizedUserId);
 
       if (!isGuest && !isValidUserId) {
         return res.status(401).json({
@@ -41,8 +40,7 @@ function authManager() {
       req.userId = isValidUserId ? normalizedUserId : undefined;
       req.isGuest = isGuest;
 
-      const requestMethod =
-        typeof req.method === "string" ? req.method.toUpperCase() : "GET";
+      const requestMethod = typeof req.method === "string" ? req.method.toUpperCase() : "GET";
       const requiresCsrfProtection = !SAFE_HTTP_METHODS.has(requestMethod);
 
       if (requiresCsrfProtection) {
@@ -109,7 +107,7 @@ function authManager() {
         userId: normalizedUserId,
         ...options,
       },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET
     );
   };
 

@@ -17,8 +17,7 @@ const writeLimiter = createRateLimiter({
   windowMs: 5 * 60 * 1000,
   max: 30,
   keyGenerator: userAwareKeyGenerator,
-  message:
-    "Too many playlist updates detected. Please try again in a few minutes.",
+  message: "Too many playlist updates detected. Please try again in a few minutes.",
 });
 
 const playlistScopedKey = createScopedKeyGenerator((req) => {
@@ -43,82 +42,46 @@ const listenLimiter = createRateLimiter({
   message: "Playback limit reached for this playlist. Please try again later.",
 });
 
-router.post(
-  "/playlist",
-  auth.verify,
-  writeLimiter,
-  PlaylistController.createPlaylist,
-);
-router.delete(
-  "/playlist/:id",
-  auth.verify,
-  writeLimiter,
-  PlaylistController.deletePlaylist,
-);
+router.post("/playlist", auth.verify, writeLimiter, PlaylistController.createPlaylist);
+router.delete("/playlist/:id", auth.verify, writeLimiter, PlaylistController.deletePlaylist);
 router.get("/playlist/:id", auth.verify, PlaylistController.getPlaylistById);
 router.get("/playlistpairs", auth.verify, PlaylistController.getPlaylistPairs);
-router.get(
-  "/playlistpairs/home",
-  auth.verify,
-  PlaylistController.getHomePlaylistPairs,
-);
-router.get(
-  "/playlistpairs/community",
-  auth.verify,
-  PlaylistController.getCommunityPlaylistPairs,
-);
-router.get(
-  "/playlistpairs/user/:username",
-  auth.verify,
-  PlaylistController.getUserPlaylistPairs,
-);
+router.get("/playlistpairs/home", auth.verify, PlaylistController.getHomePlaylistPairs);
+router.get("/playlistpairs/community", auth.verify, PlaylistController.getCommunityPlaylistPairs);
+router.get("/playlistpairs/user/:username", auth.verify, PlaylistController.getUserPlaylistPairs);
 router.get("/playlists", auth.verify, PlaylistController.getPlaylists);
-router.put(
-  "/playlist/:id",
-  auth.verify,
-  writeLimiter,
-  PlaylistController.updatePlaylist,
-);
-router.post(
-  "/playlist/:id/like",
-  auth.verify,
-  reactionLimiter,
-  PlaylistController.likePlaylist,
-);
+router.put("/playlist/:id", auth.verify, writeLimiter, PlaylistController.updatePlaylist);
+router.post("/playlist/:id/like", auth.verify, reactionLimiter, PlaylistController.likePlaylist);
 router.post(
   "/playlist/:id/dislike",
   auth.verify,
   reactionLimiter,
-  PlaylistController.dislikePlaylist,
+  PlaylistController.dislikePlaylist
 );
 router.post(
   "/playlist/:id/listen",
   auth.verify,
   listenLimiter,
-  PlaylistController.incrementPlaylistListen,
+  PlaylistController.incrementPlaylistListen
 );
-router.get(
-  "/playlist/:id/comments",
-  auth.verify,
-  PlaylistController.getPlaylistComments,
-);
+router.get("/playlist/:id/comments", auth.verify, PlaylistController.getPlaylistComments);
 router.post(
   "/playlist/:id/comments",
   auth.verify,
   writeLimiter,
-  PlaylistController.createPlaylistComment,
+  PlaylistController.createPlaylistComment
 );
 router.put(
   "/playlist/:id/comments/:commentId",
   auth.verify,
   writeLimiter,
-  PlaylistController.updatePlaylistComment,
+  PlaylistController.updatePlaylistComment
 );
 router.delete(
   "/playlist/:id/comments/:commentId",
   auth.verify,
   writeLimiter,
-  PlaylistController.deletePlaylistComment,
+  PlaylistController.deletePlaylistComment
 );
 
 module.exports = router;

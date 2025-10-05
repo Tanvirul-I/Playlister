@@ -18,7 +18,7 @@ const api = axios.create({
 attachCsrfInterceptor(api);
 api.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject(error.response),
+  (error) => Promise.reject(error.response)
 );
 
 // THESE ARE ALL THE REQUESTS WE`LL BE MAKING, ALL REQUESTS HAVE A
@@ -36,14 +36,7 @@ export const loginUser = (email, password, rememberMe = false) => {
   });
 };
 export const logoutUser = () => api.get(`/logout/`);
-export const registerUser = (
-  username,
-  firstName,
-  lastName,
-  email,
-  password,
-  passwordVerify,
-) => {
+export const registerUser = (username, firstName, lastName, email, password, passwordVerify) => {
   return api.post(`/register/`, {
     username: username,
     firstName: firstName,

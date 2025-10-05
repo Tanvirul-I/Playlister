@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { createContext, useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import api from "./auth-request-api";
 
@@ -39,7 +33,7 @@ function AuthContextProvider(props) {
         lastName,
         email,
         password,
-        passwordVerify,
+        passwordVerify
       );
 
       if (response.status === 200) {
@@ -47,7 +41,7 @@ function AuthContextProvider(props) {
         history.push("/");
       }
     },
-    [history, setLoggedInState],
+    [history, setLoggedInState]
   );
 
   const loginUser = useCallback(
@@ -65,7 +59,7 @@ function AuthContextProvider(props) {
         throw error;
       }
     },
-    [history, setLoggedInState],
+    [history, setLoggedInState]
   );
 
   const logoutUser = useCallback(async () => {
@@ -110,8 +104,7 @@ function AuthContextProvider(props) {
         }
       } catch (error) {
         console.log(error);
-        const errorMessageText =
-          error?.data?.errorMessage || "Failed to start guest session.";
+        const errorMessageText = error?.data?.errorMessage || "Failed to start guest session.";
         if (globalStore && typeof globalStore.showErrorModal === "function") {
           globalStore.showErrorModal(errorMessageText);
         }
@@ -120,7 +113,7 @@ function AuthContextProvider(props) {
 
       return null;
     },
-    [history, setLoggedInState],
+    [history, setLoggedInState]
   );
 
   const getUserInitials = useCallback(() => {
@@ -152,7 +145,7 @@ function AuthContextProvider(props) {
       logoutUser,
       continueAsGuest,
       getUserInitials,
-    ],
+    ]
   );
 
   useEffect(() => {

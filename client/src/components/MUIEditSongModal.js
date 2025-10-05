@@ -1,13 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import GlobalStoreContext from "../store";
-import {
-  Box,
-  Button,
-  Modal,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Modal, Stack, TextField, Typography } from "@mui/material";
 
 const modalSurfaceSx = {
   position: "absolute",
@@ -88,7 +81,7 @@ export default function MUIEditSongModal() {
   const modalOpen = store.isEditSongModalOpen();
   const currentSong = useMemo(
     () => store.currentSong || { title: "", artist: "", youTubeId: "" },
-    [store.currentSong],
+    [store.currentSong]
   );
 
   const [title, setTitle] = useState(currentSong.title);
@@ -117,11 +110,7 @@ export default function MUIEditSongModal() {
   }
 
   return (
-    <Modal
-      open={modalOpen}
-      onClose={handleCancelEditSong}
-      style={{ zIndex: 1250 }}
-    >
+    <Modal open={modalOpen} onClose={handleCancelEditSong} style={{ zIndex: 1250 }}>
       <Box id="edit-song-modal" sx={modalSurfaceSx}>
         <Typography
           id="edit-song-modal-header"
@@ -157,12 +146,7 @@ export default function MUIEditSongModal() {
             sx={textFieldSx}
           />
         </Stack>
-        <Stack
-          direction="row"
-          spacing={2}
-          justifyContent="flex-end"
-          className="modal-south"
-        >
+        <Stack direction="row" spacing={2} justifyContent="flex-end" className="modal-south">
           <Button
             id="edit-song-confirm-button"
             className="modal-button"

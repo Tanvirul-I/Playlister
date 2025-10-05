@@ -22,8 +22,7 @@ export const attachCsrfInterceptor = (axiosInstance) => {
   }
 
   axiosInstance.interceptors.request.use((config) => {
-    const method =
-      typeof config?.method === "string" ? config.method.toLowerCase() : "get";
+    const method = typeof config?.method === "string" ? config.method.toLowerCase() : "get";
     if (["post", "put", "patch", "delete"].includes(method)) {
       const token = getCsrfToken();
       if (token) {
@@ -37,7 +36,9 @@ export const attachCsrfInterceptor = (axiosInstance) => {
   });
 };
 
-export default {
+const csrfService = {
   getCsrfToken,
   attachCsrfInterceptor,
 };
+
+export default csrfService;
