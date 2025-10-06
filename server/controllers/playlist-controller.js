@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Playlist = require("../models/playlist-model");
 const User = require("../models/user-model");
+const { sanitizeText } = require("../utils/profanity-filter");
 
 const formatPlaylistForClient = (
   playlist,
@@ -225,16 +226,51 @@ createPlaylist = async (req, res) => {
       });
     }
 
+    let songsContainSevereProfanity = false;
+
     const sanitizedSongs = Array.isArray(body.songs)
-      ? body.songs.map((song) => ({
-          title: song?.title ?? "",
-          artist: song?.artist ?? "",
-          youTubeId: song?.youTubeId ?? "",
-        }))
+      ? body.songs.map((song) => {
+          const titleResult = sanitizeText(song?.title ?? "", { trim: true });
+          const artistResult = sanitizeText(song?.artist ?? "", { trim: true });
+
+          if (titleResult.containsSevere || artistResult.containsSevere) {
+            songsContainSevereProfanity = true;
+          }
+
+          return {
+            title: titleResult.sanitizedText,
+            artist: artistResult.sanitizedText,
+            youTubeId: typeof song?.youTubeId === "string" ? song.youTubeId.trim() : "",
+          };
+        })
       : [];
+
+    if (songsContainSevereProfanity) {
+      return res.status(400).json({
+        success: false,
+        errorMessage: "Playlist details contain language that is not allowed.",
+      });
+    }
+
+    const playlistNameResult = sanitizeText(body.name ?? "", { trim: true });
+
+    if (playlistNameResult.containsProfanity) {
+      return res.status(400).json({
+        success: false,
+        errorMessage: "Playlist name contains language that is not allowed.",
+      });
+    }
+
+    if (!playlistNameResult.sanitizedText) {
+      return res.status(400).json({
+        success: false,
+        errorMessage: "Playlist name is required.",
+      });
+    }
 
     const playlistData = {
       ...body,
+      name: playlistNameResult.sanitizedText,
       songs: sanitizedSongs,
       ratings: {
         likes: 0,
@@ -634,17 +670,49 @@ updatePlaylist = async (req, res) => {
     }
 
     const updatedPlaylist = body.playlist || {};
-    const requestedName =
-      typeof updatedPlaylist.name === "string" ? updatedPlaylist.name.trim() : "";
+    const playlistNameResult = sanitizeText(updatedPlaylist.name ?? "", { trim: true });
 
-    if (!requestedName) {
+    if (playlistNameResult.containsSevere) {
+      return res.status(400).json({
+        success: false,
+        errorMessage: "Playlist name contains language that is not allowed.",
+      });
+    }
+
+    if (!playlistNameResult.sanitizedText) {
       return res.status(400).json({
         success: false,
         errorMessage: "Playlist name is required.",
       });
     }
 
-    const baseName = requestedName;
+    let songsContainSevereProfanity = false;
+
+    const sanitizedSongs = Array.isArray(updatedPlaylist.songs)
+      ? updatedPlaylist.songs.map((song) => {
+          const titleResult = sanitizeText(song?.title ?? "", { trim: true });
+          const artistResult = sanitizeText(song?.artist ?? "", { trim: true });
+
+          if (titleResult.containsSevere || artistResult.containsSevere) {
+            songsContainSevereProfanity = true;
+          }
+
+          return {
+            title: titleResult.sanitizedText,
+            artist: artistResult.sanitizedText,
+            youTubeId: typeof song?.youTubeId === "string" ? song.youTubeId.trim() : "",
+          };
+        })
+      : [];
+
+    if (songsContainSevereProfanity) {
+      return res.status(400).json({
+        success: false,
+        errorMessage: "Playlist details contain language that is not allowed.",
+      });
+    }
+
+    const baseName = playlistNameResult.sanitizedText;
     let candidateName = baseName;
     let suffix = 1;
 
@@ -660,7 +728,7 @@ updatePlaylist = async (req, res) => {
     }
 
     playlist.name = candidateName;
-    playlist.songs = updatedPlaylist.songs;
+    playlist.songs = sanitizedSongs;
     playlist.published = updatedPlaylist.published;
 
     if (!Array.isArray(playlist.likedBy)) {
@@ -888,6 +956,15 @@ createPlaylistComment = async (req, res) => {
       });
     }
 
+    const commentResult = sanitizeText(text);
+
+    if (commentResult.containsSevere) {
+      return res.status(400).json({
+        success: false,
+        errorMessage: "Comment contains language that is not allowed.",
+      });
+    }
+
     const isPublished = typeof playlist.published === "number" && playlist.published >= 0;
     const isOwner = playlist.ownerEmail === user.email;
 
@@ -900,7 +977,7 @@ createPlaylistComment = async (req, res) => {
 
     playlist.comments.push({
       author: user.username,
-      comment: text,
+      comment: commentResult.sanitizedText,
     });
     playlist.markModified("comments");
     await playlist.save();
@@ -1013,7 +1090,16 @@ updatePlaylistComment = async (req, res) => {
       });
     }
 
-    comment.comment = text;
+    const commentResult = sanitizeText(text);
+
+    if (commentResult.containsSevere) {
+      return res.status(400).json({
+        success: false,
+        errorMessage: "Comment contains language that is not allowed.",
+      });
+    }
+
+    comment.comment = commentResult.sanitizedText;
     playlist.markModified("comments");
     await playlist.save();
 

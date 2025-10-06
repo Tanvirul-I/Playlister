@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-
-dotenv.config();
+require("../utils/configure-env");
 
 mongoose.set("useFindAndModify", false);
 

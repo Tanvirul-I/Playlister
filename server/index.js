@@ -1,12 +1,11 @@
 // THESE ARE NODE APIs WE WISH TO USE
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
+require("./utils/configure-env");
 const cookieParser = require("cookie-parser");
 const { createRateLimiter, userAwareKeyGenerator } = require("./middleware/rate-limiter");
 
 // CREATE OUR SERVER
-dotenv.config();
 const PORT = process.env.PORT || 4000;
 const app = express();
 app.set("trust proxy", 1);

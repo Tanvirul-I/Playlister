@@ -1,5 +1,5 @@
 {
-  "name": "playlister-hw4",
+  "name": "playlister-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

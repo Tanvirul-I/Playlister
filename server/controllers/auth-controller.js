@@ -2,6 +2,7 @@ const auth = require("../auth");
 const User = require("../models/user-model");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
+const { filterProfanity } = require("../utils/profanity-filter");
 
 const isProduction = process.env.NODE_ENV === "production";
 const baseCookieOptions = {
@@ -219,9 +220,30 @@ logoutUser = async (req, res) => {
 registerUser = async (req, res) => {
   try {
     const { username, firstName, lastName, email, password, passwordVerify } = req.body;
+
+    const normalizedFirstName = typeof firstName === "string" ? firstName.trim() : "";
+    const normalizedLastName = typeof lastName === "string" ? lastName.trim() : "";
+    const usernameResult = filterProfanity(username ?? "");
+    const emailResult = filterProfanity(email ?? "");
+
     if (!firstName || !lastName || !email || !password || !passwordVerify || !username) {
       return res.status(400).json({ errorMessage: "Please enter all required fields." });
     }
+
+    if (usernameResult) {
+      return res.status(400).json({
+        success: false,
+        errorMessage: "Username contains language that is not allowed.",
+      });
+    }
+
+    if (emailResult) {
+      return res.status(400).json({
+        success: false,
+        errorMessage: "Email address contains language that is not allowed.",
+      });
+    }
+
     if (password.length < 8) {
       return res.status(400).json({
         errorMessage: "Please enter a password of at least 8 characters.",
@@ -254,11 +276,11 @@ registerUser = async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
 
     const newUser = new User({
-      firstName,
-      lastName,
-      email,
+      firstName: normalizedFirstName,
+      lastName: normalizedLastName,
+      email: email,
       passwordHash,
-      username,
+      username: username,
     });
     const savedUser = await newUser.save();
 

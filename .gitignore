@@ -36,3 +36,4 @@ server/.env.test
 client/.env.test
 client/.env.production
 client/.env.development
+server/.env.development
