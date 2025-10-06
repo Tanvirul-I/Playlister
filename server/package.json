@@ -15,7 +15,8 @@
     "obscenity": "^0.4.5"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "deploy": "eb deploy"
   },
   "engines": {
     "node": ">=18"
